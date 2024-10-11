@@ -2,6 +2,9 @@ package entity;
 
 import lombok.Data;
 
+import java.util.List;
+import java.util.Map;
+
 @Data
 public class student {
     private String stuId;  //学号
@@ -11,5 +14,6 @@ public class student {
     private String major; //所属专业
     private String grade; //年级
     private String classNum; //班级号
+    private Map<String,String>stuCourses; //选择课程 <课程名称，课程编号>
 
 }
