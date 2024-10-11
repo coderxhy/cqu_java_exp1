@@ -1,8 +1,8 @@
 package Service.impl;
 
-import Service.viewInterface;
+import Service.ViewInterface;
 
-public class viewService implements viewInterface {
+public class ViewService implements ViewInterface {
     public void welcomeInterface(){
         System.out.println("欢迎使用学生成绩管理系统！！！");
         String art =

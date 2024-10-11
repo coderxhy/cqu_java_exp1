@@ -1,15 +1,18 @@
 package entity;
 
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
 import java.util.Map;
 
+@Builder
 @Data
-public class student {
+public class Student {
+    //学生至少包含学号、姓名、性别等信息
     private String stuId;  //学号
     private String stuName; //姓名
-    private boolean sex; //性别  0:女 1:男
+    private String sex; //性别  女 男
+
     private String department; //所属学院
     private String major; //所属专业
     private String grade; //年级
