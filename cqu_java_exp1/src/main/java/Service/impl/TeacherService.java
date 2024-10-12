@@ -4,11 +4,13 @@ import Service.TeacherInterface;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import entity.Teacher;
 import mapper.TeacherMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@Service
 public class TeacherService extends ServiceImpl<TeacherMapper, Teacher> implements TeacherInterface {
     private static final String[] TEACHER_NAMES = {
             "John Smith", "Emma Johnson", "Michael Brown", "Olivia Davis",

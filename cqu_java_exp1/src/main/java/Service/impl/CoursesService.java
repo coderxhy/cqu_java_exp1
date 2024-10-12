@@ -4,11 +4,13 @@ import Service.CoursesInterface;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import entity.Courses;
 import mapper.CoursesMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+@Service
 public class CoursesService extends ServiceImpl<CoursesMapper, Courses> implements CoursesInterface {
     private static String[] DEPARTMENTS = {
             "计算机学院", "机械工程学院", "电子信息学院", "生物科学学院", "经济管理学院"

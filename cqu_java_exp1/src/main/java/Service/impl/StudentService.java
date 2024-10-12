@@ -4,12 +4,14 @@ import Service.StudentInterface;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import entity.Student;
 import mapper.StudentMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
+@Service
 public class StudentService extends ServiceImpl<StudentMapper, Student> implements StudentInterface {
     private static final String[] FIRST_NAMES = {
             "Liam", "Emma", "Noah", "Olivia", "Oliver",
