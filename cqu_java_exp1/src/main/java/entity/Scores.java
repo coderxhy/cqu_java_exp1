@@ -1,7 +1,13 @@
 package entity;
 
+import lombok.Data;
+
+import java.util.ArrayList;
+
+@Data
 public class Scores {
-    private String stuId; //学号
-    private String courseId; //课程编号
-    private Integer score; //成绩
+    private int normScore; //平时成绩
+    private int midTermScore; //中期成绩
+    private int finalScore; //期末成绩
+    private int labScore;//实验成绩
 }

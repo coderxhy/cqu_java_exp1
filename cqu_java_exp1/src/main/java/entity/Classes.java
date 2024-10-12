@@ -13,8 +13,5 @@ public class Classes {
     private String BeginTerm;//开课学期
 
     private String department; //所属学院
-    private String grade; //年级
-
-
 
 }

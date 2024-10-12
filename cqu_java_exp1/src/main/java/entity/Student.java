@@ -16,7 +16,7 @@ public class Student {
     private String department; //所属学院
     private String major; //所属专业
     private String grade; //年级
-    private String classNum; //班级号
-    private Map<String,String>stuCourses; //选择课程 <课程名称，课程编号>
+    private String classId; //班级号
 
+    private Map<String,Courses> stuCourses; //学生成绩
 }
