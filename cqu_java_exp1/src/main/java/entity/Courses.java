@@ -12,6 +12,7 @@ public class Courses {
     private String courseId; //课程编号
     private String courseName; //课程名称
     private List<String> classId; //教学班号
+    private List<Double> weight; //权重 依次为平时成绩、期中成绩、期末成绩、实验成绩
 //    private Map<String,Scores> scoreMap;
 
 //    private String department; //所属学院
