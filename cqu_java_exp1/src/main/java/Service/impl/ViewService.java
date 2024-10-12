@@ -14,6 +14,6 @@ public class ViewService implements ViewInterface {
 
         System.out.println(art);
         //列出功能选项
-
+        
     }
 }

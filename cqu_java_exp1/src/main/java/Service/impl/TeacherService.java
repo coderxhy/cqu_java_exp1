@@ -6,6 +6,7 @@ import entity.Teacher;
 import mapper.TeacherMapper;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class TeacherService extends ServiceImpl<TeacherMapper, Teacher> implements TeacherInterface {
@@ -31,23 +32,27 @@ public class TeacherService extends ServiceImpl<TeacherMapper, Teacher> implemen
         return teachers;
     }
     @Override
-    public void appendTeacherInfo(Teacher s){
+    public void appendTeacherInfo(Teacher t){
 
     }
     @Override
-    public void deleteTeacherInfo(Teacher s){
+    public void deleteTeacherInfo(Teacher t){
 
     }
     @Override
-    public void updateTeacherInfo(Teacher s){
+    public void updateTeacherInfo(Teacher t){
 
     }
     @Override
-    public Teacher viewTeacherBasicInfo(Teacher s){
-        return null;
-    }
-    @Override
-    public Teacher viewTeacherAllInfo(Teacher s){
-        return null;
+    public void viewTeacherAllInfo(Teacher t){
+        StringBuilder sb=new StringBuilder();
+        List<String> classList=t.getClassId();
+        sb.append("教师编号：").append(t.getTeacherId())
+                .append("\t教师姓名：").append(t.getTeacherName());
+        if(classList!=null&&classList.size()>0){
+            String classStr = classList.toString();
+            sb.append("教学班级编号列表：").append(classStr);
+        }
+        System.out.println(sb);
     }
 }
