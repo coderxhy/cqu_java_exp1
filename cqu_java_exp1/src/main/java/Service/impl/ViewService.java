@@ -90,12 +90,15 @@ public class ViewService implements ViewInterface {
         System.out.println("4. 查看教学班信息");
         System.out.println("5. 返回上一级");
     }
-    public void QueryShowInterface(){
+    public void QueryScoresShowInterface(){
         clearScreen();
-        System.out.println("查询系统");
-        System.out.println("1. 查询教学班级学生成绩");
-        System.out.println("2. 查询特定学生的成绩");
-        System.out.println("3. 返回上一级");
+        System.out.println("成绩查询系统");
+        System.out.println("1. 教学班号查询教学班级学生成绩"); //需要键入一个classId
+        System.out.println("2. 学号查询学生的成绩"); //需要键入一个stuId
+        System.out.println("3. 姓名查询学生的成绩"); //需要键入一个stuName
+        System.out.println("4. 查看成绩分布情况");
+        System.out.println("5. 查看所有学生的成绩");
+        System.out.println("6. 返回上一级");
     }
 
 }

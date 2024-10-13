@@ -12,6 +12,6 @@ public interface ViewInterface {
     public void ScoresShowInterface();
 
     public void ClassShowInterface();
-    public void QueryShowInterface();
+    public void QueryScoresShowInterface();
 }
 
