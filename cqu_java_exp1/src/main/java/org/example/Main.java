@@ -11,6 +11,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+    public static  ArrayList<Student> testStudent(){
+        Student stu=Student.builder().stuId("20221545").stuName("ZiyuLiu").sex("Man").build();
+        Student stu2=Student.builder().stuId("20221537").stuName("HongyuXu").sex("Man").build();
+        ArrayList<Student> arrayStu=new ArrayList<>();
+        arrayStu.add(stu);
+        arrayStu.add(stu2);
+        return arrayStu;
+    }
     public static  void testStudentGenerator(){
         StudentService studentService = new StudentService();
         ArrayList<Student> stu=studentService.randomGenerateInfo();
@@ -31,19 +39,34 @@ public class Main {
     }
     public static void testDeleteStuById(){
         StudentService studentService = new StudentService();
-        Student stu=Student.builder().stuId("20221545").stuName("ZiyuLiu").sex("Man").build();
-        Student stu2=Student.builder().stuId("20221537").stuName("HongyuXu").sex("Man").build();
-        ArrayList<Student> arrayStu=new ArrayList<>();
-        arrayStu.add(stu);
-        arrayStu.add(stu2);
+        ArrayList<Student> arrayStu=testStudent();
         String res=studentService.deleteStuById("20221545",arrayStu);
         System.out.println(res);
         arrayStu.forEach(studentService::viewStuBasicInfo);
+    }
+    public static void testAddStudent(){
+        StudentService studentService = new StudentService();
+        ArrayList<Student> stuArray=testStudent();
+        Student stu=Student.builder().stuId("20221545").stuName("lzy").sex("Man").build();
+        String res=studentService.appendStuInfo(stu,stuArray);
+        System.out.println(res);
+    }
+    public static void testUpdateStudent(){
+        StudentService studentService = new StudentService();
+        ArrayList<Student> stuArray=testStudent();
+        Student stu=Student.builder().stuId("20221545").stuName("BabyLiu")
+                .sex("男").department("Computer Science Department").major("Computer Science Major")
+                .grade("Grade Third").classId("03")
+                .build();
+        String res=studentService.updateStuInfo("20221545",stu,stuArray);
+        System.out.println(res);
     }
     public static void main(String[] args) {
 //        testStudentGenerator();
 //        testTeacherGenerator();
 //        testView();
-        testDeleteStuById();
+//        testDeleteStuById();
+//        testAddStudent();
+        testUpdateStudent();
     }
 }
