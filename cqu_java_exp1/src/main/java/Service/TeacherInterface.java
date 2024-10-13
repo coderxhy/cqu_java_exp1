@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public interface TeacherInterface extends IService<Teacher> {
     ArrayList<Teacher> randomGenerateInfo();
-    void appendTeacherInfo(Teacher t);
-    void deleteTeacherInfo(Teacher t);
-    void updateTeacherInfo(Teacher t);
+    String appendTeacherInfo(Teacher t,ArrayList<Teacher> teachers);
+    String deleteTeacherById(String TeacherId,ArrayList<Teacher> teachers);
+    String updateTeacherInfo(String TeacherId,ArrayList<Teacher>teachers);
     void viewTeacherAllInfo(Teacher t);
 }
