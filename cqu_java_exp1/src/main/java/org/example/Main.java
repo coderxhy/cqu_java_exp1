@@ -1,6 +1,7 @@
 package org.example;
 
 
+import Controller.StudentController;
 import Service.impl.StudentService;
 import Service.impl.TeacherService;
 import Service.impl.ViewService;
@@ -32,10 +33,10 @@ public class Main {
     public static void testView(){
         ViewService viewService = new ViewService();
         viewService.welcomeInterface();
-        Scanner scanner = new Scanner(System.in);
-        if(scanner.nextInt()==1){
-            viewService.StudentShowInterface();
-        }
+//        Scanner scanner = new Scanner(System.in);
+//        if(scanner.nextInt()==1){
+//            viewService.StudentShowInterface();
+//        }
     }
     public static void testDeleteStuById(){
         StudentService studentService = new StudentService();
@@ -67,6 +68,9 @@ public class Main {
 //        testView();
 //        testDeleteStuById();
 //        testAddStudent();
-        testUpdateStudent();
+//        testUpdateStudent();
+        StudentController sc=new StudentController();
+        testView();
+        sc.StudentInfoManagement();
     }
 }

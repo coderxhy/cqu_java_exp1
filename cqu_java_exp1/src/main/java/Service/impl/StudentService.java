@@ -55,9 +55,10 @@ public class StudentService extends ServiceImpl<StudentMapper, Student> implemen
         }
         else{
             students.add(s);
-            sb.append("添加学生信息成功，添加的学生基本信息——学号：").append(s.getStuId())
-                    .append("\t姓名：").append(s.getStuName())
-                    .append("\t性别：").append(s.getSex());
+            sb.append("添加学生信息成功：");
+//                    .append(s.getStuId())
+//                    .append("\t姓名：").append(s.getStuName())
+//                    .append("\t性别：").append(s.getSex());
             return sb.toString();
         }
     }
@@ -67,9 +68,10 @@ public class StudentService extends ServiceImpl<StudentMapper, Student> implemen
         Optional<Student> opt= students.stream().filter((Student s)->StuId==s.getStuId()).findFirst();
         if(opt.isPresent()){
             students.remove(opt.get());
-            sb.append("成功通过学号删除学生信息：删除的学生基本信息——学号：").append(opt.get().getStuId())
-                    .append("\t姓名：").append(opt.get().getStuName())
-                    .append("\t性别：").append(opt.get().getSex());
+            sb.append("成功通过学号删除学生信息");
+//                    .append(opt.get().getStuId())
+//                    .append("\t姓名：").append(opt.get().getStuName())
+//                    .append("\t性别：").append(opt.get().getSex());
             return sb.toString();
         }
         else{

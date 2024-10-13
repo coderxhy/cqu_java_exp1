@@ -5,6 +5,7 @@ import entity.Student;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 @Service
 public class ViewService implements ViewInterface {
@@ -49,6 +50,29 @@ public class ViewService implements ViewInterface {
         System.out.println("4. 查看学生信息");
         System.out.println("5. 查看所有学生信息");
         System.out.println("6. 返回上一级");
+    }
+    @Override
+    public Student AppendStudentInterface(){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("请输入你要添加的学生信息：");
+        System.out.println("姓名：");
+        String name = sc.next();
+        System.out.println("学号：");
+        String id = sc.next();
+        System.out.println("性别：");
+        String sex=sc.next();
+        System.out.println("学院：");
+        String department=sc.next();
+        System.out.println("专业：");
+        String major=sc.next();
+        System.out.println("年级：");
+        String grade=sc.next();
+        System.out.println("教学班号：");
+        String classId=sc.next();
+        Student stu=Student.builder().stuName(name).stuId(id)
+                .sex(sex).department(department).major(major)
+                .classId(classId).grade(grade).build();
+        return stu;
     }
     @Override
     public void TeacherShowInterface(){
