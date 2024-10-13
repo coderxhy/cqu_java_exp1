@@ -4,12 +4,13 @@ import Service.ScoresInterface;
 import entity.Courses;
 import entity.Scores;
 import entity.Student;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
+@Service
 public class ScoresService implements ScoresInterface {
     @Override
     public String queryScoresByClassId(String classId, ArrayList<Student> students, ArrayList<Courses>courses){
@@ -173,7 +174,7 @@ public class ScoresService implements ScoresInterface {
                 sb.append("输入错误");
                 break;
         }
-                
+
         for(String key:scoreDistribution.keySet()){
             sb.append("分数段: ").append(key).append(" 学生数: ").append(scoreDistribution.get(key)).append("\n");
         }
