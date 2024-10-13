@@ -24,7 +24,7 @@ public class ViewService implements ViewInterface {
         clearScreen();
         System.out.println("欢迎使用学生成绩管理系统！！！");
         String art =
-                         "W   W  EEEEE  L      CCCC  OOO  M   M  EEEEE \n" +
+                        " W   W  EEEEE  L      CCCC  OOO  M   M  EEEEE \n" +
                         " W W W  E      L     C     O   O MM MM  E     \n" +
                         " W W W  EEEEE  L     C     O   O M M M  EEEEE \n" +
                         " W W W  E      L     C     O   O M   M  E     \n" +
@@ -37,7 +37,8 @@ public class ViewService implements ViewInterface {
         System.out.println("3. 课程信息管理");
         System.out.println("4. 成绩信息管理");
         System.out.println("5. 教学班信息管理");
-        System.out.println("6. 退出系统");
+        System.out.println("6. 查询系统");
+        System.out.println("7. 退出系统");
     }
     @Override
     public void StudentShowInterface(){
@@ -89,4 +90,12 @@ public class ViewService implements ViewInterface {
         System.out.println("4. 查看教学班信息");
         System.out.println("5. 返回上一级");
     }
+    public void QueryShowInterface(){
+        clearScreen();
+        System.out.println("查询系统");
+        System.out.println("1. 查询教学班级学生成绩");
+        System.out.println("2. 查询特定学生的成绩");
+        System.out.println("3. 返回上一级");
+    }
+
 }
