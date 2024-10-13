@@ -29,9 +29,21 @@ public class Main {
             viewService.StudentShowInterface();
         }
     }
+    public static void testDeleteStuById(){
+        StudentService studentService = new StudentService();
+        Student stu=Student.builder().stuId("20221545").stuName("ZiyuLiu").sex("Man").build();
+        Student stu2=Student.builder().stuId("20221537").stuName("HongyuXu").sex("Man").build();
+        ArrayList<Student> arrayStu=new ArrayList<>();
+        arrayStu.add(stu);
+        arrayStu.add(stu2);
+        String res=studentService.deleteStuById("20221545",arrayStu);
+        System.out.println(res);
+        arrayStu.forEach(studentService::viewStuBasicInfo);
+    }
     public static void main(String[] args) {
 //        testStudentGenerator();
 //        testTeacherGenerator();
-        testView();
+//        testView();
+        testDeleteStuById();
     }
 }
