@@ -22,7 +22,7 @@ public class ViewService implements ViewInterface {
     }
     @Override
     public void welcomeInterface(){
-        clearScreen();
+//        clearScreen();
         System.out.println("欢迎使用学生成绩管理系统！！！");
         String art =
                         " W   W  EEEEE  L      CCCC  OOO  M   M  EEEEE \n" +
@@ -43,33 +43,32 @@ public class ViewService implements ViewInterface {
     }
     @Override
     public void StudentShowInterface(){
-        clearScreen();
+//        clearScreen();
         System.out.println("学生信息管理");
         System.out.println("1. 添加学生信息");
         System.out.println("2. 删除学生信息");
         System.out.println("3. 修改学生信息");
-        System.out.println("4. 查看学生信息");
-        System.out.println("5. 查看所有学生信息");
+        System.out.println("4. 查看学生基本信息");
+        System.out.println("5. 查看学生所有信息");
         System.out.println("6. 返回上一级");
     }
     @Override
-    public Student AppendStudentInterface(){
+    public Student StudentInterface(){
         Scanner sc=new Scanner(System.in);
-        System.out.println("请输入你要添加的学生信息：");
         System.out.println("姓名：");
-        String name = sc.next();
+        String name = sc.nextLine();
         System.out.println("学号：");
-        String id = sc.next();
+        String id = sc.nextLine();
         System.out.println("性别：");
-        String sex=sc.next();
+        String sex=sc.nextLine();
         System.out.println("学院：");
-        String department=sc.next();
+        String department=sc.nextLine();
         System.out.println("专业：");
-        String major=sc.next();
+        String major=sc.nextLine();
         System.out.println("年级：");
-        String grade=sc.next();
+        String grade=sc.nextLine();
         System.out.println("教学班号：");
-        String classId=sc.next();
+        String classId=sc.nextLine();
         Student stu=Student.builder().stuName(name).stuId(id)
                 .sex(sex).department(department).major(major)
                 .classId(classId).grade(grade).build();

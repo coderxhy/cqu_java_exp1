@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.code.stu.entity.Student;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public interface StudentInterface
 //        extends IService<Student>
@@ -11,7 +12,7 @@ public interface StudentInterface
     ArrayList<Student> randomGenerateInfo();
     String appendStuInfo(Student s,ArrayList<Student> students);
     String deleteStuById(String StuId,ArrayList<Student> students);
-    String updateStuInfo(String StuId,Student stu,ArrayList<Student> students);
+    String updateStuInfo(Student stu, Optional<Student> opt);
     void viewStuBasicInfo(Student s);
     void viewStuAllInfo(Student s);
 }

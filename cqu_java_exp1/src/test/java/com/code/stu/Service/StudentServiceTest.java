@@ -4,6 +4,7 @@ import com.code.stu.Service.impl.StudentService;
 import com.code.stu.entity.Student;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.cquer.Main.testStudent;
 
@@ -40,10 +41,11 @@ public class StudentServiceTest {
         StudentService studentService = new StudentService();
         ArrayList<Student> stuArray=testStudent();
         Student stu=Student.builder().stuId("20221545").stuName("BabyLiu")
-                .sex("男").department("Computer Science Department").major("Computer Science Major")
+                .sex("").department("Computer Science Department").major("Computer Science Major")
                 .grade("Grade Third").classId("03")
                 .build();
-        String res=studentService.updateStuInfo("20221545",stu,stuArray);
+        Optional<Student> opt=stuArray.stream().filter((Student s)->s.getStuId().equals((stu.getStuId()))).findFirst();
+        String res=studentService.updateStuInfo(stu,opt);
         System.out.println(res);
     }
 }
