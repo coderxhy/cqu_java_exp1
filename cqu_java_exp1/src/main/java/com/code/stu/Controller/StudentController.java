@@ -19,7 +19,6 @@ public class StudentController {
     private ArrayList<Student> students=studentService.randomGenerateInfo();
 
     public void StudentInfoManagement(){
-//        students.forEach(studentService::viewStuBasicInfo);
         Scanner sc=new Scanner(System.in);
         boolean flag=true;
         while(flag){

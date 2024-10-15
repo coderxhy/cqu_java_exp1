@@ -9,6 +9,7 @@ import com.code.stu.entity.Student;
 import com.code.stu.entity.Teacher;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
     public static  ArrayList<Student> testStudent(){
@@ -25,8 +26,32 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        StudentController sc=new StudentController();
-        testView();
-        sc.StudentInfoManagement();
+        Scanner scanner = new Scanner(System.in);
+        boolean inSystem = true;
+        while (inSystem) {
+            testView();
+            switch (scanner.nextInt()){
+                case 1:
+                    StudentController sc=new StudentController();
+                    sc.StudentInfoManagement();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    inSystem=false;
+                    break;
+                default:
+                    System.out.println("输入的选择命令错误，请依照提示在1-7中进行输入");
+            }
+        }
+        System.out.println("成功退出系统，欢迎您的再次使用！");
     }
 }
