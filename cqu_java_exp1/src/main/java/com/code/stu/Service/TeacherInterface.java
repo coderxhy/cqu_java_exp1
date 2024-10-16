@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.code.stu.entity.Teacher;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public interface TeacherInterface
 //        extends IService<Teacher>
@@ -11,6 +12,6 @@ public interface TeacherInterface
     ArrayList<Teacher> randomGenerateInfo();
     String appendTeacherInfo(Teacher t,ArrayList<Teacher> teachers);
     String deleteTeacherById(String TeacherId,ArrayList<Teacher> teachers);
-    String updateTeacherInfo(String TeacherId,ArrayList<Teacher>teachers);
+    String updateTeacherInfo(Teacher teacher,Optional<Teacher> opt);
     void viewTeacherAllInfo(Teacher t);
 }

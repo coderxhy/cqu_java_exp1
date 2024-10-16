@@ -6,6 +6,7 @@ import com.code.stu.entity.Teacher;
 import com.code.stu.mapper.TeacherMapper;
 import org.springframework.stereotype.Service;
 
+import java.security.PublicKey;
 import java.util.*;
 
 @Service
@@ -63,21 +64,17 @@ public class TeacherService
         }
     }
     @Override
-    public String updateTeacherInfo(String TeacherId,ArrayList<Teacher>teachers){
+    public String updateTeacherInfo(Teacher teacher, Optional<Teacher> opt){
         StringBuilder sb = new StringBuilder();
-        Optional<Teacher> opt= teachers.stream().filter((Teacher t)->Objects.equals(TeacherId,t.getTeacherId())).findFirst();
-        if(opt.isPresent()){
-            Teacher teacher=opt.get();
-            teacher.setTeacherName("NewName");
-            sb.append("成功通过教师编号更新教师信息：更新后的教师基本信息——教师编号：").append(teacher.getTeacherId())
-                    .append("\t姓名：").append(teacher.getTeacherName());
-            return sb.toString();
+        if(teacher.getTeacherId()!=null&&!teacher.getTeacherId().equals("")){
+            opt.get().setTeacherId(teacher.getTeacherId());
         }
-        else{
-            sb.append("对应教师编号不存在，更新失败，请确认教师编号无误后再进行更新操作！");
-            return sb.toString();
+        if(teacher.getTeacherName()!=null&&!teacher.getTeacherName().equals("")){
+            opt.get().setTeacherName(teacher.getTeacherName());
         }
-
+        sb.append("更新成功！");
+        viewTeacherAllInfo(opt.get());
+        return sb.toString();
     }
     @Override
     public void viewTeacherAllInfo(Teacher t){

@@ -4,8 +4,11 @@ import com.code.stu.Service.ScoresInterface;
 import com.code.stu.entity.Courses;
 import com.code.stu.entity.Scores;
 import com.code.stu.entity.Student;
+import org.jfree.chart.ChartPanel;
 import org.springframework.stereotype.Service;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -176,10 +179,21 @@ public class ScoresService
                 sb.append("输入错误");
                 break;
         }
+        //画图
+        JFrame j = new JFrame();
+        JDialog jd = new JDialog(j, "成绩分布图", true);
+        jd.setBounds(50, 50, 800, 600);
+        jd.setLayout(new BorderLayout());
 
-        for(String key:scoreDistribution.keySet()){
-            sb.append("分数段: ").append(key).append(" 学生数: ").append(scoreDistribution.get(key)).append("\n");
-        }
+        // 创建柱状图
+        BarChart barChart = new BarChart(scoreDistribution);
+        ChartPanel chartPanel = barChart.getPanel();
+
+        // 将图表面板添加到对话框
+        jd.add(chartPanel, BorderLayout.CENTER);
+
+        // 显示对话框
+        jd.setVisible(true);
         return sb.toString();
     }
     @Override
