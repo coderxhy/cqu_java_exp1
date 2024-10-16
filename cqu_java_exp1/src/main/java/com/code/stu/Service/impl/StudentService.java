@@ -24,6 +24,9 @@ public class StudentService
             "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson"
     };
     private static final String[] SEX={"男","女"};
+    private static final String[] GRADE = {"Freshman","Sophomore","Junior","Senior"};
+
+    private CoursesService coursesService=new CoursesService();
 
     @Override
     public ArrayList<Student> randomGenerateInfo(){
@@ -35,10 +38,14 @@ public class StudentService
 
         for(int i=0;i<firstNameNum;i++){
             for(int j=0;j<lastNameNum;j++){
+                Map.Entry<String, String> entry = coursesService.GenerateEntry();
                 Student student = Student.builder()
                         .stuName(FIRST_NAMES[r.nextInt(FIRST_NAMES.length)]+LAST_NAMES[r.nextInt(LAST_NAMES.length)])
                         .sex(SEX[r.nextInt(SEX.length)])
                         .stuId("2022"+String.valueOf(r.nextInt(10000)))
+                        .grade(GRADE[r.nextInt(GRADE.length)])
+                        .department(entry.getKey())
+                        .major(entry.getValue())
                         .build();
                 students.add(student);
             }
@@ -100,9 +107,6 @@ public class StudentService
         if(stu.getGrade()!=null&&!stu.getGrade().equals("")){
             opt.get().setGrade(stu.getGrade());
         }
-        if(stu.getClassId()!=null&&!stu.getClassId().equals("")){
-            opt.get().setClassId(stu.getClassId());
-        }
         sb.append("更新成功！");
         viewStuAllInfo(opt.get());
         return sb.toString();
@@ -124,8 +128,7 @@ public class StudentService
                 .append("\t性别：").append(s.getSex())
                 .append("\t学院：").append(s.getDepartment())
                 .append("\t专业：").append(s.getMajor())
-                .append("\t年级：").append(s.getGrade())
-                .append("\t教学班号：").append(s.getClassId());
+                .append("\t年级：").append(s.getGrade());
         System.out.println(sb);
     }
 }

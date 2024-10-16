@@ -38,7 +38,7 @@ public class ViewService implements ViewInterface {
         System.out.println("3. 课程信息管理");
         System.out.println("4. 成绩信息管理");
         System.out.println("5. 教学班信息管理");
-        System.out.println("6. 查询系统");
+        System.out.println("6. 成绩查询系统");
         System.out.println("7. 退出系统");
     }
     @Override
@@ -67,11 +67,9 @@ public class ViewService implements ViewInterface {
         String major=sc.nextLine();
         System.out.println("年级：");
         String grade=sc.nextLine();
-        System.out.println("教学班号：");
-        String classId=sc.nextLine();
         Student stu=Student.builder().stuName(name).stuId(id)
                 .sex(sex).department(department).major(major)
-                .classId(classId).grade(grade).build();
+                .grade(grade).build();
         return stu;
     }
     @Override

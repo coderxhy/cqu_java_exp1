@@ -42,7 +42,7 @@ public class StudentServiceTest {
         ArrayList<Student> stuArray=testStudent();
         Student stu=Student.builder().stuId("20221545").stuName("BabyLiu")
                 .sex("").department("Computer Science Department").major("Computer Science Major")
-                .grade("Grade Third").classId("03")
+                .grade("Grade Third")
                 .build();
         Optional<Student> opt=stuArray.stream().filter((Student s)->s.getStuId().equals((stu.getStuId()))).findFirst();
         String res=studentService.updateStuInfo(stu,opt);

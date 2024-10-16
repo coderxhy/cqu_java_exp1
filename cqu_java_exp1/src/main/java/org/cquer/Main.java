@@ -32,20 +32,27 @@ public class Main {
             testView();
             switch (scanner.nextInt()){
                 case 1:
+                    //学生信息管理
                     StudentController sc=new StudentController();
                     sc.StudentInfoManagement();
                     break;
                 case 2:
+                    //教师信息管理
                     break;
                 case 3:
+                    //课程信息管理
                     break;
                 case 4:
+                    //成绩信息管理
                     break;
                 case 5:
+                    //教学班信息管理
                     break;
                 case 6:
+                    //成绩查询系统
                     break;
                 case 7:
+                    //退出系统
                     inSystem=false;
                     break;
                 default:
