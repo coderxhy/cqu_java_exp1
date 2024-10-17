@@ -2,6 +2,7 @@ package com.code.stu.Service.impl;
 
 import com.code.stu.Service.ViewInterface;
 import com.code.stu.entity.Student;
+import com.code.stu.entity.Teacher;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -82,6 +83,18 @@ public class ViewService implements ViewInterface {
         System.out.println("4. 查看教师信息");
         System.out.println("5. 返回上一级");
     }
+
+    @Override
+    public Teacher TeacherInterface() {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("教师编号：");
+        String id = sc.nextLine();
+        System.out.println("教师姓名：");
+        String name = sc.nextLine();
+        Teacher t = Teacher.builder().teacherId(id).teacherName(name).build();
+        return t;
+    }
+
     @Override
     public void CourseShowInterface(){
         clearScreen();

@@ -2,9 +2,12 @@ package org.cquer;
 
 
 import com.code.stu.Controller.StudentController;
+import com.code.stu.Controller.TeacherController;
+import com.code.stu.Service.impl.CoursesService;
 import com.code.stu.Service.impl.StudentService;
 import com.code.stu.Service.impl.TeacherService;
 import com.code.stu.Service.impl.ViewService;
+import com.code.stu.entity.Courses;
 import com.code.stu.entity.Student;
 import com.code.stu.entity.Teacher;
 
@@ -25,8 +28,20 @@ public class Main {
         viewService.welcomeInterface();
     }
 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+        CoursesService coursesService = new CoursesService();
+        ArrayList<Courses> courses=coursesService.randomGenerateInfo();
+
+        StudentService studentService = new StudentService();
+        ArrayList<Student> students=studentService.randomGenerateInfo();
+
+        TeacherService teacherService = new TeacherService();
+        ArrayList<Teacher> teachers=teacherService.randomGenerateInfo(courses);
+
+
         boolean inSystem = true;
         while (inSystem) {
             testView();
@@ -34,10 +49,12 @@ public class Main {
                 case 1:
                     //学生信息管理
                     StudentController sc=new StudentController();
-                    sc.StudentInfoManagement();
+                    sc.StudentInfoManagement(students,courses);
                     break;
                 case 2:
                     //教师信息管理
+                    TeacherController tc=new TeacherController();
+                    tc.TeacherInfoManagement(teachers);
                     break;
                 case 3:
                     //课程信息管理

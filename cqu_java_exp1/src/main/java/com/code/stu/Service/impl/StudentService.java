@@ -42,7 +42,7 @@ public class StudentService
                 Student student = Student.builder()
                         .stuName(FIRST_NAMES[r.nextInt(FIRST_NAMES.length)]+LAST_NAMES[r.nextInt(LAST_NAMES.length)])
                         .sex(SEX[r.nextInt(SEX.length)])
-                        .stuId("2022"+String.valueOf(r.nextInt(10000)))
+                        .stuId("2022"+r.nextInt(10000))
                         .grade(GRADE[r.nextInt(GRADE.length)])
                         .department(entry.getKey())
                         .major(entry.getValue())
@@ -64,9 +64,6 @@ public class StudentService
         else{
             students.add(s);
             sb.append("添加学生信息成功：");
-//                    .append(s.getStuId())
-//                    .append("\t姓名：").append(s.getStuName())
-//                    .append("\t性别：").append(s.getSex());
             return sb.toString();
         }
     }
@@ -76,10 +73,10 @@ public class StudentService
         Optional<Student> opt= students.stream().filter((Student s)->s.getStuId().equals(StuId)).findFirst();
         if(opt.isPresent()){
             students.remove(opt.get());
-            sb.append("成功通过学号删除学生信息");
-//                    .append(opt.get().getStuId())
-//                    .append("\t姓名：").append(opt.get().getStuName())
-//                    .append("\t性别：").append(opt.get().getSex());
+            sb.append("成功通过学号删除学生信息，删除的学生的基本信息——\t学号：")
+                    .append(opt.get().getStuId())
+                    .append("\t姓名：").append(opt.get().getStuName())
+                    .append("\t性别：").append(opt.get().getSex());
             return sb.toString();
         }
         else{

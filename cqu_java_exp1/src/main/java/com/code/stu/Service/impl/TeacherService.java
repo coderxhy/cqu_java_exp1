@@ -2,12 +2,15 @@ package com.code.stu.Service.impl;
 
 import com.code.stu.Service.TeacherInterface;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.code.stu.entity.Courses;
 import com.code.stu.entity.Teacher;
 import com.code.stu.mapper.TeacherMapper;
 import org.springframework.stereotype.Service;
 
 import java.security.PublicKey;
 import java.util.*;
+
+import static com.code.stu.Service.impl.CoursesService.*;
 
 @Service
 public class TeacherService
@@ -20,15 +23,32 @@ public class TeacherService
             "Daniel Anderson", "Mia Thomas", "Lucas Jackson",
             "Ella White", "Henry Harris", "Grace Martin"
     };
+    public  static final int CLASS_SELECT_NUM=2;
     @Override
-    public ArrayList<Teacher> randomGenerateInfo() {
+    public ArrayList<Teacher> randomGenerateInfo(ArrayList<Courses> coursesList) {
         ArrayList<Teacher> teachers = new ArrayList<>();
         Random r = new Random();
+        //为每一个教学班都要至少分配一个老师
+        HashSet<String> classSet = new HashSet<>();
+        int id = 0;
         //生成10个教师对象
         for (int i = 0; i < 10; i++) {
+            //为每个教师对象选CLASS_SELECT_NUM个课程 ，随机选取到其中的教学班
+            ArrayList<String> classIdList = new ArrayList<>();
+            for(int j = 0; j < CLASS_SELECT_NUM; j++) {
+                List<String> classLists=coursesList.get(id).getClassId();
+                int randomNum = r.nextInt(CLASS_ID_LIST_SIZE);
+                if (classSet.contains(classLists.get(randomNum))){
+                    randomNum = (randomNum + 1) % CLASS_ID_LIST_SIZE;
+                }
+                classIdList.add(classLists.get(randomNum));
+                classSet.add(classLists.get(randomNum));
+                id=(id+1)%COURSE_NUM;
+            }
             Teacher teacher = Teacher.builder()
                     .teacherName(TEACHER_NAMES[r.nextInt(TEACHER_NAMES.length)])
-                    .teacherId("100"+String.valueOf(r.nextInt(1000)))
+                    .teacherId("100"+r.nextInt(1000))
+                    .classId(classIdList)
                     .build();
             teachers.add(teacher);
         }
@@ -43,8 +63,7 @@ public class TeacherService
             return sb.toString();
         } else {
             teachers.add(t);
-            sb.append("成功添加教师信息：添加的教师基本信息——教师编号：").append(t.getTeacherId())
-                    .append("\t姓名：").append(t.getTeacherName());
+            sb.append("成功添加教师信息：添加的教师的信息:");
             return sb.toString();
         }
     }
@@ -54,7 +73,7 @@ public class TeacherService
         Optional<Teacher> opt= teachers.stream().filter((Teacher t)-> Objects.equals(TeacherId, t.getTeacherId())).findFirst();
         if(opt.isPresent()){
             teachers.remove(opt.get());
-            sb.append("成功通过教室编号删除教室信息：删除的教师基本信息——教师编号：").append(opt.get().getTeacherId())
+            sb.append("成功通过教室编号删除教室信息，删除的教师的信息——教师编号：").append(opt.get().getTeacherId())
                     .append("\t姓名：").append(opt.get().getTeacherName());
             return sb.toString();
         }
@@ -84,7 +103,7 @@ public class TeacherService
                 .append("\t教师姓名：").append(t.getTeacherName());
         if(classList!=null&&classList.size()>0){
             String classStr = classList.toString();
-            sb.append("教学班级编号列表：").append(classStr);
+            sb.append("\t教学班级编号列表：").append(classStr);
         }
         System.out.println(sb);
     }

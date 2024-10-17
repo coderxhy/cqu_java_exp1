@@ -2,6 +2,7 @@ package com.code.stu.Controller;
 
 import com.code.stu.Service.impl.StudentService;
 import com.code.stu.Service.impl.ViewService;
+import com.code.stu.entity.Courses;
 import com.code.stu.entity.Student;
 import org.springframework.stereotype.Controller;
 
@@ -16,9 +17,8 @@ public class StudentController {
 //    @Autowired
     private ViewService viewService=new ViewService();
 
-    private ArrayList<Student> students=studentService.randomGenerateInfo();
 
-    public void StudentInfoManagement(){
+    public void StudentInfoManagement(ArrayList<Student> students, ArrayList<Courses> courses){
         Scanner sc=new Scanner(System.in);
         boolean flag=true;
         while(flag){

@@ -10,9 +10,9 @@ import java.util.*;
 public class CoursesService
 //        extends ServiceImpl<CoursesMapper, Courses>
         implements CoursesInterface {
-    private static final int COURSE_NUM=5;
-    private static final int CLASS_NUM=15;
-    private static final  int CLASS_ID_LIST_SIZE=CLASS_NUM/COURSE_NUM;
+    public static final int COURSE_NUM=10;
+    public static final int CLASS_NUM=20;
+    public static final  int CLASS_ID_LIST_SIZE=CLASS_NUM/COURSE_NUM;
 
     private static String[] DEPARTMENTS = {
             "计算机学院", "软件工程学院", "电气信息学院"
@@ -63,11 +63,11 @@ public class CoursesService
         return CourseIdMap;
     }
 
-
     @Override
     public ArrayList<Courses> randomGenerateInfo(){
         ArrayList<Courses> courses=new ArrayList<>();
         HashSet<String> classIdSet=new HashSet<>();
+        HashSet<String> courseNameSet=new HashSet<>();
         Random r=new Random();
         HashMap<String,String> idMap=GenerateCourseIds();
         for(int i=0;i<COURSE_NUM;i++){
@@ -83,7 +83,13 @@ public class CoursesService
                 classIdSet.add(classIdArray.get(randomId));
                 classIdList.add(classIdArray.get(randomId));
             }
-            String Name=CoursesArray[r.nextInt(CoursesArray.length)];
+            //防止选的课程重复
+            int randomCourseId=r.nextInt(CoursesArray.length);
+            while(courseNameSet.contains(CoursesArray[randomCourseId])){
+                randomCourseId=(randomCourseId+1)%CoursesArray.length;
+            }
+            String Name=CoursesArray[randomCourseId];
+            courseNameSet.add(Name);
             Courses course = Courses.builder().department(DEPARTMENTS[r.nextInt(DEPARTMENTS.length)])
                     .courseId(idMap.get(Name)).courseName(Name).classId(classIdList)
                     .weight(Arrays.asList(0.3,0.1,0.4,0.2))
