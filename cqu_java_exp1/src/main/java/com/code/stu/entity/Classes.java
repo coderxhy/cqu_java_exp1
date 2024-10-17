@@ -1,7 +1,9 @@
 package com.code.stu.entity;
 
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 //教学班
 public class Classes {

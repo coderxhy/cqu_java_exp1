@@ -29,7 +29,7 @@ public class CoursesService
             "大学物理", "大学英语", "大学体育",
             "中国近代史纲要","马克思主义基本原理","文明经典"
     };
-    private  ArrayList<String> classIdArray=GenerateClassId();
+    public   ArrayList<String> classIdArray=GenerateClassId();
 
 //    产生ClassId -> "CLASS"+[0,CLASS_NUM-1]
     @Override

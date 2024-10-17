@@ -9,14 +9,24 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+
 @Service
 public class ScoresService
 //        extends ServiceImpl<ScoresMapper,Scores>
         implements ScoresInterface {
+    @Override
+    public Scores RandomGenerrateInfo(){
+        Random r = new Random();
+        int finalTerm=r.nextInt(30)+70;
+        int norm=r.nextInt(25)+75;
+        int midTerm=r.nextInt(20)+80;
+        int lab=r.nextInt(15)+85;
+        int total=finalTerm+norm+midTerm+lab;
+        Scores score=new Scores(norm,midTerm,finalTerm,lab,total,new Date());
+        return score;
+    }
+
     @Override
     public String queryScoresByClassId(String classId, ArrayList<Student> students, ArrayList<Courses>courses){
         //根据classId得到该教学班的课程名称

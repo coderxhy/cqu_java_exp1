@@ -2,10 +2,14 @@ package com.code.stu.Service.impl;
 
 import com.code.stu.Service.StudentInterface;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.code.stu.entity.Courses;
+import com.code.stu.entity.Scores;
 import com.code.stu.entity.Student;
 import com.code.stu.mapper.StudentMapper;
 import org.springframework.stereotype.Service;
 import java.util.*;
+
+import static com.code.stu.Service.impl.CoursesService.CLASS_ID_LIST_SIZE;
 
 
 @Service
@@ -25,20 +29,38 @@ public class StudentService
     };
     private static final String[] SEX={"男","女"};
     private static final String[] GRADE = {"Freshman","Sophomore","Junior","Senior"};
+    public static final int EACH_SELECT_NUM=4;
 
     private CoursesService coursesService=new CoursesService();
+    private ScoresService scoresService=new ScoresService();
 
     @Override
-    public ArrayList<Student> randomGenerateInfo(){
+    public ArrayList<Student> randomGenerateInfo(ArrayList<Courses> coursesList){
         ArrayList<Student> students = new ArrayList<>();
         Random r = new Random();
+
         //随机出firstName与lastName的个数 进行随机组合 [10-15]*[10-15]=totalStudents
         int firstNameNum = r.nextInt(FIRST_NAMES.length-9)+10;
         int lastNameNum = r.nextInt(LAST_NAMES.length-9)+10;
 
         for(int i=0;i<firstNameNum;i++){
             for(int j=0;j<lastNameNum;j++){
+                HashMap<String,String> coursesMap=new HashMap<>();
+                HashMap<String,Scores> scoresMap=new HashMap<>();
+                //防止学生选课时发生重复
+                HashSet<String> selectedCourses=new HashSet<>();
                 Map.Entry<String, String> entry = coursesService.GenerateEntry();
+                for(int k=0;k<EACH_SELECT_NUM;k++){
+                    //对每个科目随机生成成绩
+                    Scores score=scoresService.RandomGenerrateInfo();
+                    Courses randomCourse=coursesList.get(r.nextInt(coursesList.size()));
+                    while(selectedCourses.contains(randomCourse.getCourseName())){
+                        randomCourse=coursesList.get(r.nextInt(coursesList.size()));
+                    }
+                    selectedCourses.add(randomCourse.getCourseName());
+                    coursesMap.put(randomCourse.getCourseName(), randomCourse.getClassId().get(r.nextInt(CLASS_ID_LIST_SIZE)));
+                    scoresMap.put(randomCourse.getCourseName(), score);
+                }
                 Student student = Student.builder()
                         .stuName(FIRST_NAMES[r.nextInt(FIRST_NAMES.length)]+LAST_NAMES[r.nextInt(LAST_NAMES.length)])
                         .sex(SEX[r.nextInt(SEX.length)])
@@ -46,6 +68,8 @@ public class StudentService
                         .grade(GRADE[r.nextInt(GRADE.length)])
                         .department(entry.getKey())
                         .major(entry.getValue())
+                        .selectedCourses(coursesMap)
+                        .stuCourses(scoresMap)
                         .build();
                 students.add(student);
             }
@@ -125,7 +149,9 @@ public class StudentService
                 .append("\t性别：").append(s.getSex())
                 .append("\t学院：").append(s.getDepartment())
                 .append("\t专业：").append(s.getMajor())
-                .append("\t年级：").append(s.getGrade());
+                .append("\t年级：").append(s.getGrade())
+                .append("\t已选课程表：").append(s.getSelectedCourses())
+                .append("\n科目成绩表").append(s.getStuCourses());
         System.out.println(sb);
     }
 }

@@ -1,6 +1,8 @@
 package com.code.stu.Service;
 
+import com.code.stu.Service.impl.CoursesService;
 import com.code.stu.Service.impl.StudentService;
+import com.code.stu.entity.Courses;
 import com.code.stu.entity.Student;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -12,11 +14,12 @@ import static org.cquer.Main.testStudent;
 public class StudentServiceTest {
 
     private StudentService studentService=new StudentService();
-
+    private CoursesService coursesService = new CoursesService();
+    ArrayList<Courses> courses=coursesService.randomGenerateInfo();
 
     @Test
     public void testStudentGenerator() {
-        ArrayList<Student> stu = studentService.randomGenerateInfo();
+        ArrayList<Student> stu = studentService.randomGenerateInfo(courses);
         stu.forEach(studentService::viewStuBasicInfo);
     }
 

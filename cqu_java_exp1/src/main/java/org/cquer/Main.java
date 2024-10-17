@@ -36,7 +36,7 @@ public class Main {
         ArrayList<Courses> courses=coursesService.randomGenerateInfo();
 
         StudentService studentService = new StudentService();
-        ArrayList<Student> students=studentService.randomGenerateInfo();
+        ArrayList<Student> students=studentService.randomGenerateInfo(courses);
 
         TeacherService teacherService = new TeacherService();
         ArrayList<Teacher> teachers=teacherService.randomGenerateInfo(courses);
