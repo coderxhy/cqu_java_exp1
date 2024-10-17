@@ -38,10 +38,12 @@ public class ScoresService
         for(Courses course:courses){
             if(course.getClassId().contains(classId)){
                 courseName=course.getCourseName();
-            }else {
-                sb.append("未找到该教学班号对应的课程信息");
-                return sb.toString();
+                break;
             }
+        }
+        if(courses.equals("")){
+            sb.append("未找到该教学班号对应的课程信息");
+            return sb.toString();
         }
         for(Student student:students){
             if(student.getSelectedCourses().containsValue(classId)){
@@ -116,39 +118,38 @@ public class ScoresService
             case 1:
                 System.out.println("请输入学号:");
                 String stuId = scanner.next();
-                for (Student student : students) {
-                    if (student.getStuId().equals(stuId)) {
-                        //<分数段,课程数> 先初始化一个哈希，数量为10 key为"0-9","10-19"... value为0
-                        //根据该学生每一门的课程最终成绩进行统计
-                        for (String courseName : student.getStuCourses().keySet()) {
-                            int totalScore = student.getStuCourses().get(courseName).getTotalScore();
-                            String key = "";
-                            if (totalScore >= 0 && totalScore <= 9) {
-                                key = "0-9";
-                            } else if (totalScore >= 10 && totalScore <= 19) {
-                                key = "10-19";
-                            } else if (totalScore >= 20 && totalScore <= 29) {
-                                key = "20-29";
-                            } else if (totalScore >= 30 && totalScore <= 39) {
-                                key = "30-39";
-                            } else if (totalScore >= 40 && totalScore <= 49) {
-                                key = "40-49";
-                            } else if (totalScore >= 50 && totalScore <= 59) {
-                                key = "50-59";
-                            } else if (totalScore >= 60 && totalScore <= 69) {
-                                key = "60-69";
-                            } else if (totalScore >= 70 && totalScore <= 79) {
-                                key = "70-79";
-                            } else if (totalScore >= 80 && totalScore <= 89) {
-                                key = "80-89";
-                            } else if (totalScore >= 90 && totalScore <= 100) {
-                                key = "90-100";
-                            }
-                            scoreDistribution.put(key, scoreDistribution.getOrDefault(key, 0) + 1);
+                Optional<Student> opt=students.stream().filter(student->student.getStuId().equals(stuId)).findFirst();
+                if(opt.isPresent()){
+                    Student student=opt.get();
+                    for(String courseName:student.getStuCourses().keySet()){
+                        int totalScore=student.getStuCourses().get(courseName).getTotalScore();
+                        String key="";
+                        if(totalScore>=0&&totalScore<=9){
+                            key="0-9";
+                        }else if(totalScore>=10&&totalScore<=19){
+                            key="10-19";
+                        }else if(totalScore>=20&&totalScore<=29){
+                            key="20-29";
+                        }else if(totalScore>=30&&totalScore<=39){
+                            key="30-39";
+                        }else if(totalScore>=40&&totalScore<=49){
+                            key="40-49";
+                        }else if(totalScore>=50&&totalScore<=59){
+                            key="50-59";
+                        }else if(totalScore>=60&&totalScore<=69){
+                            key="60-69";
+                        }else if(totalScore>=70&&totalScore<=79){
+                            key="70-79";
+                        }else if(totalScore>=80&&totalScore<=89){
+                            key="80-89";
+                        }else if(totalScore>=90&&totalScore<=100){
+                            key="90-100";
                         }
-                    } else {
-                        sb.append("未找到该学号对应的学生信息");
+                        scoreDistribution.put(key,scoreDistribution.getOrDefault(key,0)+1);
                     }
+                    sb.append("查询成功！\n");
+                }else {
+                    sb.append("未找到该学号对应的学生信息");
                 }
                 break;
             case 2:
@@ -189,21 +190,25 @@ public class ScoresService
                 sb.append("输入错误");
                 break;
         }
-        //画图
-        JFrame j = new JFrame();
-        JDialog jd = new JDialog(j, "成绩分布图", true);
-        jd.setBounds(50, 50, 800, 600);
-        jd.setLayout(new BorderLayout());
-
-        // 创建柱状图
-        BarChart barChart = new BarChart(scoreDistribution);
-        ChartPanel chartPanel = barChart.getPanel();
-
-        // 将图表面板添加到对话框
-        jd.add(chartPanel, BorderLayout.CENTER);
-
-        // 显示对话框
-        jd.setVisible(true);
+        //打印分数段分布
+        for(String key:scoreDistribution.keySet()){
+            sb.append(key).append(": ").append(scoreDistribution.get(key)).append("\n");
+        }
+//        //画图
+//        JFrame j = new JFrame();
+//        JDialog jd = new JDialog(j, "成绩分布图", true);
+//        jd.setBounds(50, 50, 800, 600);
+//        jd.setLayout(new BorderLayout());
+//
+//        // 创建柱状图
+//        BarChart barChart = new BarChart(scoreDistribution);
+//        ChartPanel chartPanel = barChart.getPanel();
+//
+//        // 将图表面板添加到对话框
+//        jd.add(chartPanel, BorderLayout.CENTER);
+//
+//        // 显示对话框
+//        jd.setVisible(true);
         return sb.toString();
     }
     @Override
