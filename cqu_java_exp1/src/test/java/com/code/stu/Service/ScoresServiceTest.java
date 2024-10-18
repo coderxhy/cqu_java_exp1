@@ -22,7 +22,7 @@ public class ScoresServiceTest {
     ArrayList<Student> stu = studentService.randomGenerateInfo(courses);
     @Test
     public void testScoresQueryScoresByClassId(){
-        //stu.forEach(studentService::viewStuAllInfo);
+//        stu.forEach(studentService::viewStuAllInfo);
         String res =  scoresService.queryScoresByClassId("CLASS0",stu,courses);
         System.out.println(res);
     }

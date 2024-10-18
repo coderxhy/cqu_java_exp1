@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 public class ClassesServiceTest {
-    private ClassesService classesService = new ClassesService();
+    private ClassesService classesService=new ClassesService();
     private StudentService studentService=new StudentService();
     private CoursesService coursesService = new CoursesService();
     private TeacherService teacherService=new TeacherService();
