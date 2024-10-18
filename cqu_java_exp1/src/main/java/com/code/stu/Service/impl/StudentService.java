@@ -52,8 +52,8 @@ public class StudentService
                 Map.Entry<String, String> entry = coursesService.GenerateEntry();
                 for(int k=0;k<EACH_SELECT_NUM;k++){
                     //对每个科目随机生成成绩
-                    Scores score=scoresService.RandomGenerrateInfo();
                     Courses randomCourse=coursesList.get(r.nextInt(coursesList.size()));
+                    Scores score=scoresService.RandomGenerrateInfo(randomCourse);
                     while(selectedCourses.contains(randomCourse.getCourseName())){
                         randomCourse=coursesList.get(r.nextInt(coursesList.size()));
                     }

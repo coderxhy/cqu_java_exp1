@@ -19,15 +19,16 @@ public class BarChart {
     //2-BarChart的无参数的构造方法
     public BarChart(Map<String, Integer> scoreDistribution) {
         DefaultCategoryDataset data=(DefaultCategoryDataset) getDataSet(scoreDistribution);
-        JFreeChart chart=ChartFactory.createBarChart(
-                "成绩分布图",  //图表标题
-                "成绩分布",//目录轴的显示标签
-                "数量",//数值轴的显示标签
+        JFreeChart chart = ChartFactory.createBarChart(
+                "成绩分布图",  // 图表标题
+                "成绩分布",   // 目录轴的显示标签
+                "数量",       // 数值轴的显示标签
                 data,
-                PlotOrientation.VERTICAL,  //图表方向 水平 垂直
-                true,  //是否显示图例(对于简单的图表建议显示图例)
-                false,//是否生成工具
-                false);  //是否生成网址链接
+                PlotOrientation.VERTICAL,  // 图表方向 水平 垂直
+                true,  // 是否显示图例(对于简单的图表建议显示图例)
+                false, // 是否生成工具
+                false  // 是否生成网址链接
+        );
         //字体设置
         //获得图表区域对象
         CategoryPlot plot=chart.getCategoryPlot();

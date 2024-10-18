@@ -10,19 +10,22 @@ import org.springframework.stereotype.Service;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 @Service
 public class ScoresService
 //        extends ServiceImpl<ScoresMapper,Scores>
         implements ScoresInterface {
     @Override
-    public Scores RandomGenerrateInfo(){
+    public Scores RandomGenerrateInfo(Courses course){
         Random r = new Random();
         int finalTerm=r.nextInt(30)+70;
         int norm=r.nextInt(25)+75;
         int midTerm=r.nextInt(20)+80;
         int lab=r.nextInt(15)+85;
-        int total=finalTerm+norm+midTerm+lab;
+        List<Double> weight=course.getWeight();
+        double totalScore=norm*weight.get(0)+midTerm*weight.get(1)+finalTerm*weight.get(2)+lab*weight.get(3);
+        int total=(int)totalScore;
         Scores score=new Scores(norm,midTerm,finalTerm,lab,total,new Date());
         return score;
     }
@@ -194,7 +197,7 @@ public class ScoresService
         for(String key:scoreDistribution.keySet()){
             sb.append(key).append(": ").append(scoreDistribution.get(key)).append("\n");
         }
-//        //画图
+        //画图
 //        JFrame j = new JFrame();
 //        JDialog jd = new JDialog(j, "成绩分布图", true);
 //        jd.setBounds(50, 50, 800, 600);

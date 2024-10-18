@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public interface ScoresInterface
 //extends IService<Scores>
-{   Scores RandomGenerrateInfo();
+{   Scores RandomGenerrateInfo(Courses course);
     public String queryScoresByClassId(String classId, ArrayList<Student> students, ArrayList<Courses>courses);
     public String queryScoresByStuId(String stuId, ArrayList<Student> students);
     public String queryScoresByStuName(String stuName, ArrayList<Student> students);
