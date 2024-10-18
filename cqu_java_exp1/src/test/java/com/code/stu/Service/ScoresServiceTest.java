@@ -50,8 +50,8 @@ public class ScoresServiceTest {
     public void testScoresQueryScoresShowDistributionOfScores(){
 //        ArrayList<Student> stu = studentService.randomGenerateInfo(courses);
         stu.forEach(studentService::viewStuAllInfo);
-        String res =  scoresService.showDistributionOfScores(stu);
-        System.out.println(res);
+        scoresService.showDistributionOfScores(stu);
+
 
     }
     @Test

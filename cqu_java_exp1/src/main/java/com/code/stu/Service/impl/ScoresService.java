@@ -17,7 +17,7 @@ public class ScoresService
 //        extends ServiceImpl<ScoresMapper,Scores>
         implements ScoresInterface {
     @Override
-    public Scores RandomGenerrateInfo(Courses course){
+    public Scores RandomGenerateInfo(Courses course){
         Random r = new Random();
         int finalTerm=r.nextInt(30)+70;
         int norm=r.nextInt(25)+75;
@@ -26,9 +26,9 @@ public class ScoresService
         List<Double> weight=course.getWeight();
         double totalScore=norm*weight.get(0)+midTerm*weight.get(1)+finalTerm*weight.get(2)+lab*weight.get(3);
         int total=(int)totalScore;
-        Scores score=new Scores(norm,midTerm,finalTerm,lab,total,new Date());
-        return score;
+        return new Scores(norm,midTerm,finalTerm,lab,total,new Date());
     }
+
 
     @Override
     public String queryScoresByClassId(String classId, ArrayList<Student> students, ArrayList<Courses>courses){
@@ -108,8 +108,8 @@ public class ScoresService
         return sb.toString();
     }
     @Override
-    public String showDistributionOfScores(ArrayList<Student> students){
-        StringBuilder sb=new StringBuilder();
+    public void showDistributionOfScores(ArrayList<Student> students){
+//        StringBuilder sb=new StringBuilder();
         //统计某位学生各科成绩的分数段分布
         //统计所有学生某科成绩的分数段分布
         Map<String, Integer> scoreDistribution = new HashMap<>();
@@ -150,9 +150,9 @@ public class ScoresService
                         }
                         scoreDistribution.put(key,scoreDistribution.getOrDefault(key,0)+1);
                     }
-                    sb.append("查询成功！\n");
+                    System.out.println("查询成功！");
                 }else {
-                    sb.append("未找到该学号对应的学生信息");
+                    System.out.println("未找到该学生学号，请检查后重试！");
                 }
                 break;
             case 2:
@@ -190,29 +190,29 @@ public class ScoresService
                 }
                 break;
             default:
-                sb.append("输入错误");
+                System.out.println("输入错误");
                 break;
         }
         //打印分数段分布
-        for(String key:scoreDistribution.keySet()){
-            sb.append(key).append(": ").append(scoreDistribution.get(key)).append("\n");
-        }
+//        for(String key:scoreDistribution.keySet()){
+//            sb.append(key).append(": ").append(scoreDistribution.get(key)).append("\n");
+//        }
         //画图
-//        JFrame j = new JFrame();
-//        JDialog jd = new JDialog(j, "成绩分布图", true);
-//        jd.setBounds(50, 50, 800, 600);
-//        jd.setLayout(new BorderLayout());
-//
-//        // 创建柱状图
-//        BarChart barChart = new BarChart(scoreDistribution);
-//        ChartPanel chartPanel = barChart.getPanel();
-//
-//        // 将图表面板添加到对话框
-//        jd.add(chartPanel, BorderLayout.CENTER);
-//
-//        // 显示对话框
-//        jd.setVisible(true);
-        return sb.toString();
+
+        JFrame j = new JFrame();
+        JDialog jd = new JDialog(j, "成绩分布图", true);
+        jd.setBounds(50, 50, 800, 600);
+        jd.setLayout(new BorderLayout());
+
+        // 创建柱状图
+        BarChart barChart = new BarChart(scoreDistribution);
+        ChartPanel chartPanel = barChart.getPanel();
+
+        // 将图表面板添加到对话框
+        jd.add(chartPanel, BorderLayout.CENTER);
+
+        // 显示对话框
+        jd.setVisible(true);
     }
     @Override
     public String showScoresOfAllStudents(ArrayList<Student> students){

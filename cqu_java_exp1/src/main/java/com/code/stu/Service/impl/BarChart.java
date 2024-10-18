@@ -9,6 +9,8 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.chart.ChartFactory;
+
+import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
