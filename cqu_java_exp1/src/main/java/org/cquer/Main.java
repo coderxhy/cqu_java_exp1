@@ -1,18 +1,18 @@
 package org.cquer;
 
 
+import com.code.stu.Controller.ClassesController;
 import com.code.stu.Controller.CoursesController;
 import com.code.stu.Controller.StudentController;
 import com.code.stu.Controller.TeacherController;
-import com.code.stu.Service.impl.CoursesService;
-import com.code.stu.Service.impl.StudentService;
-import com.code.stu.Service.impl.TeacherService;
-import com.code.stu.Service.impl.ViewService;
+import com.code.stu.Service.impl.*;
+import com.code.stu.entity.Classes;
 import com.code.stu.entity.Courses;
 import com.code.stu.entity.Student;
 import com.code.stu.entity.Teacher;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -42,6 +42,7 @@ public class Main {
         TeacherService teacherService = new TeacherService();
         ArrayList<Teacher> teachers=teacherService.randomGenerateInfo(courses);
 
+        ClassesService classesService = new ClassesService();
 
         boolean inSystem = true;
         while (inSystem) {
@@ -66,7 +67,9 @@ public class Main {
                     //成绩信息管理
                     break;
                 case 5:
-                    //教学班信息管理
+                    ClassesController ccc=new ClassesController();
+                    ArrayList<Classes> classes = classesService.buildClasses(coursesService.classIdArray, courses, students, teachers);
+                    ccc.ClassesInfoManagement(classes);
                     break;
                 case 6:
                     //成绩查询系统

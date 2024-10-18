@@ -15,6 +15,8 @@ public class CoursesController {
 
     private ViewService viewService=new ViewService();
 
+
+
     public void CoursesInfoManagement(ArrayList<Student> students, ArrayList<Teacher> teachers,ArrayList<Courses> courses){
         Scanner sc=new Scanner(System.in);
         boolean courseFlag=true;

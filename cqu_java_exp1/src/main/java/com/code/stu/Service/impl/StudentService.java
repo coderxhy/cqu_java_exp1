@@ -17,17 +17,17 @@ public class StudentService
 //        extends ServiceImpl<StudentMapper, Student>
         implements StudentInterface {
     private static final String[] FIRST_NAMES = {
-            "伟", "芳", "娜", "静", "军",
-            "涛", "丽", "强", "燕", "敏",
-            "鹏", "娟", "辉", "梅", "鑫",
-            "琪", "杰", "超", "莉", "宁"
-    };
-
-    private static final String[] LAST_NAMES = {
             "张", "王", "李", "赵", "刘",
             "陈", "杨", "黄", "吴", "徐",
             "孙", "马", "朱", "胡", "林",
             "郭", "何", "高", "罗", "曾"
+    };
+
+    private static final String[] LAST_NAMES = {
+            "伟", "芳", "娜", "静", "军",
+            "涛", "丽", "强", "燕", "敏",
+            "鹏", "娟", "辉", "梅", "鑫",
+            "琪", "杰", "超", "莉", "宁"
     };
     private static final String[] SEX={"男","女"};
     private static final String[] GRADE = {"Freshman","Sophomore","Junior","Senior"};

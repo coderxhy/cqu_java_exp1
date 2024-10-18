@@ -16,6 +16,7 @@ public class CoursesService
     public static final int COURSE_NUM=10;
     public static final int CLASS_NUM=20;
     public static final  int CLASS_ID_LIST_SIZE=CLASS_NUM/COURSE_NUM;
+    public static final int ASSIGN_STUDENT_NUM=30;
 
     private static String[] DEPARTMENTS = {
             "计算机学院", "软件工程学院", "电气信息学院"
@@ -32,14 +33,16 @@ public class CoursesService
             "大学物理", "大学英语", "大学体育",
             "中国近代史纲要", "马克思主义基本原理", "文明经典"
     ));
+    public static ArrayList<String> classIdArray;
+    static {
+        classIdArray = GenerateClassId();
+    }
 
-    public ArrayList<String> classIdArray = GenerateClassId();
 
     Random r = new Random();
 
 //    产生ClassId -> "CLASS"+[0,CLASS_NUM-1]
-    @Override
-    public ArrayList<String> GenerateClassId() {
+    public static ArrayList<String> GenerateClassId() {
         ArrayList<String> classIdList = new ArrayList<>();
         for (int i = 0; i < CLASS_NUM; i++) {
             String classId="CLASS"+i;
@@ -138,7 +141,7 @@ public class CoursesService
                 List<Courses> unassignedCourses = courses.stream().filter(course -> !course.isAssigned())
                         .collect(Collectors.toList());
                 if(unassignedCourses.size()==0){
-                    System.out.println("没有未分配的课程");
+                    System.out.println("没有未分配的课程\n");
                     break;
                 }
                 /*为每个未分配课程进行分配操作
@@ -146,7 +149,7 @@ public class CoursesService
                 * 每个课程的每个教学班给它分配至少20个学生
                 * */
                 for (Courses course : unassignedCourses) {
-                    System.out.println("请为课程分配至少两个老师");
+                    System.out.printf("请为 %s 课程分配至少两个老师", course.getCourseName());
                     int count=0;
                     boolean assignTeacherFlag = true;
                     while (assignTeacherFlag) {
@@ -227,13 +230,20 @@ public class CoursesService
                                     assignStudentFlag = false;
                                     break;
                                 case 3:
-                                    
+                                    for (int j = 0; j < ASSIGN_STUDENT_NUM; j++) {
+                                        int eachRandomId = r.nextInt(students.size());
+                                        Student s = students.get(eachRandomId);
+                                        int idx=students.indexOf(s);
+                                        s.getSelectedCourses().put(course.getCourseName(), course.getClassId().get(i));
+                                        students.set(idx,s);
+                                        System.out.printf("成功为学号为 %s 的 %s 学生选了 %s 课程的 %s 教学班\n", s.getStuId(),s.getStuName(), course.getCourseName(), course.getClassId().get(i));
+                                    }
+                                    assignStudentFlag = false;
                                     break;
                                 default:
                                     System.out.println("请输入正确的选项!\n");
                                     break;
                             }
-
                         }
                     }
 

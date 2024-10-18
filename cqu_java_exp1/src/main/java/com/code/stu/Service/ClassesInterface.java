@@ -12,4 +12,5 @@ public interface ClassesInterface {
     Map<String, Long> countStudentPerClass(ArrayList<Student> students);
     ArrayList<Classes> buildClasses(ArrayList<String> classIdArray, ArrayList<Courses> coursesArray,
                                     ArrayList <Student> stuArray, ArrayList<Teacher> teacherArray);
+    void showClasses(Classes signalClass);
 }

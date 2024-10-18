@@ -15,7 +15,7 @@ public interface CoursesInterface
     ArrayList<Courses> randomGenerateInfo();
     Map.Entry<String, String> GenerateEntry();
     HashMap<String, String> GenerateCourseIds();
-    ArrayList<String> GenerateClassId();
+//    ArrayList<String> GenerateClassId();
     String appendCourses(Courses course,ArrayList<Courses> courses);
     Optional<Courses> findCourse(ArrayList<Courses> courses);
     void  showCourseAllInfo(Courses c);

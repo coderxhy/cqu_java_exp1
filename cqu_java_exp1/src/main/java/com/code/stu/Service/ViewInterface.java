@@ -5,6 +5,7 @@ import com.code.stu.entity.Student;
 import com.code.stu.entity.Teacher;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public interface ViewInterface {
@@ -14,7 +15,7 @@ public interface ViewInterface {
      void TeacherShowInterface();
      Teacher TeacherInterface();
      void CourseShowInterface();
-     Optional<Courses> CourseInterface(ArrayList<String> classIdArray, ArrayList<Courses> courses);
+     Optional<Courses> CourseInterface(List<String> classIdArray, ArrayList<Courses> courses);
      void ScoresShowInterface();
      void ClassShowInterface();
 }

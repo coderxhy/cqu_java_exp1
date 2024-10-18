@@ -40,4 +40,16 @@ public class ClassesService implements ClassesInterface {
         }
         return classes;
     }
+
+    @Override
+    public void showClasses(Classes signalClass) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("教学班号：").append(signalClass.getClassId())
+                .append("\t课程名称：").append(signalClass.getCourseName())
+                .append("\t教师编号：").append(signalClass.getTeacherId())
+                .append("\t总人数:").append(signalClass.getTotalStudentNum())
+                .append("\t开课学期:").append(signalClass.getBeginTerm())
+                .append("\n");
+        System.out.println(sb);
+    }
 }

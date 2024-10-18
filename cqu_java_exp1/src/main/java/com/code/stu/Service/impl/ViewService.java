@@ -109,7 +109,7 @@ public class ViewService implements ViewInterface {
     }
 
     @Override
-    public Optional<Courses> CourseInterface(ArrayList<String> classIdArray,ArrayList<Courses> courses) {
+    public Optional<Courses> CourseInterface(List<String> classIdArray,ArrayList<Courses> courses) {
         StringBuilder sb = new StringBuilder();
         System.out.println("所属学院：");//ToDo:验证是否在已有的学院里，否则不予通过
         String department=sc.nextLine();
@@ -134,6 +134,9 @@ public class ViewService implements ViewInterface {
         else{
             for (int i = 0; i <CLASS_ID_LIST_SIZE ; i++) {
                 int randomNum = r.nextInt(RANGE) + CLASS_NUM;
+                while(classIdArray.contains("CLASS"+randomNum)){
+                    randomNum = (randomNum + 1) % (RANGE + CLASS_NUM);
+                }
                 classIdArray.add("CLASS" +randomNum );
                 curClassId.add("CLASS" + randomNum);
             }
