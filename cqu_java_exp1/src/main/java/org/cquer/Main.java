@@ -60,7 +60,7 @@ public class Main {
                 case 3:
                     //课程信息管理
                     CoursesController cc=new CoursesController();
-                    cc.CoursesInfoManagement(courses);
+                    cc.CoursesInfoManagement(students,teachers,courses);
                     break;
                 case 4:
                     //成绩信息管理

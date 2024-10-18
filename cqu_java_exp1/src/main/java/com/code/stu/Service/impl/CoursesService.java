@@ -137,6 +137,10 @@ public class CoursesService
             case 2:
                 List<Courses> unassignedCourses = courses.stream().filter(course -> !course.isAssigned())
                         .collect(Collectors.toList());
+                if(unassignedCourses.size()==0){
+                    System.out.println("没有未分配的课程");
+                    break;
+                }
                 /*为每个未分配课程进行分配操作
                 * 每个课程给它分配两个老师(根据教师编号)
                 * 每个课程的每个教学班给它分配至少20个学生
@@ -144,42 +148,91 @@ public class CoursesService
                 for (Courses course : unassignedCourses) {
                     System.out.println("请为课程分配至少两个老师");
                     int count=0;
-                    System.out.println("分配教师选项展示：" +
-                            "\n1.教师信息展示" +
-                            "\n2.开始分配");
                     boolean assignTeacherFlag = true;
                     while (assignTeacherFlag) {
+                        System.out.println("分配教师选项展示：" +
+                                "\n1.教师信息展示" +
+                                "\n2.开始分配" +
+                                "\n请键入选项!");
                         switch (sc.nextInt()){
                             case 1:
-                                System.out.println("-------------------------------");
-                                System.out.println("教师信息展示");
+                                System.out.println("----------------------------------------------------------------");
+                                System.out.println("---------------------------教师信息展示---------------------------");
                                 teachers.forEach(new TeacherService()::viewTeacherAllInfo);
-                                System.out.println("-------------------------------");
+                                System.out.println("----------------------------------------------------------------");
                                 break;
                             case 2:
                                 while (count<CLASS_ID_LIST_SIZE) {
-                                    System.out.println("请输入教师编号");
+                                    System.out.println("请输入教师编号：");
                                     String teacherId = sc.next();
                                     Optional<Teacher> teacherOpt = teachers.stream().filter(t -> t.getTeacherId().equals(teacherId)).findFirst();
                                     //存在则分配，并修改Teacher中的 List<String> classId
                                     if(teacherOpt.isPresent()){
-                                        System.out.println("分配成功!");
-                                        teacherOpt.get().getClassId().add(course.getClassId().get(count));
+                                        Teacher teacher = teacherOpt.get();
+                                        int index=teachers.indexOf(teacher);
+                                        System.out.printf("成功为教师编号为 %s 的教师安排了 %s 课程的 %s 教学班\n",teacherId,course.getCourseName(),course.getClassId().get(count));
+                                        teacher.getClassId().add(course.getClassId().get(count));
+                                        teachers.set(index, teacher);
                                         count++;
                                     }
                                     else{
-                                        System.out.println("教师编号不存在，分配失败，请重新分配!");
+                                        System.out.println("教师编号不存在，分配失败，请重新分配!\n");
                                     }
                                 }
                                 assignTeacherFlag = false;
+                                break;
+                            default:
+                                System.out.println("请输入正确的选项!\n");
                                 break;
                         }
                     }
                     System.out.println("请为课程的每个教学班分配至少二十个学生");
                     for(int i=0;i<CLASS_ID_LIST_SIZE;i++){
-                        int countStudent=0;
+                        System.out.printf("正在为 %s 教学班分配学生", course.getClassId().get(i));
                         boolean assignStudentFlag=true;
                         while (assignStudentFlag) {
+                            System.out.println("分配学生选项展示：" +
+                                    "\n1.学生信息展示" +
+                                    "\n2.自主分配" +
+                                    "\n3.自动分配" +
+                                    "\n请键入选项!");
+                            switch (sc.nextInt()){
+                                case 1:
+                                    System.out.println("----------------------------------------------------------------");
+                                    System.out.println("---------------------------学生信息展示---------------------------");
+                                    students.forEach(new StudentService()::viewStuAllInfo);
+                                    System.out.println("----------------------------------------------------------------");
+                                    break;
+                                case 2:
+                                    while(true){
+                                        System.out.println("请输入选择该教学班的学生学号(输入-1时停止自主分配)");
+                                        String studentId = sc.next();
+                                        if(studentId.equals("-1")){
+                                            System.out.println("已停止自主分配......");
+                                            break;
+                                        }
+                                        Optional<Student> stuOpt = students.stream().filter(s -> s.getStuId().equals(studentId)).findFirst();
+                                        if(stuOpt.isPresent()){
+                                            //更新学生属性中的selectedCourses
+                                            Student stu = stuOpt.get();
+                                            int index=students.indexOf(stu);
+                                            stu.getSelectedCourses().put(course.getCourseName(), course.getClassId().get(i));
+                                            students.set(index, stu);
+                                            System.out.printf("成功为学号为 %s 的学生选了 %s 课程的 %s 教学班\n", studentId, course.getCourseName(), course.getClassId().get(i));
+                                        }
+                                        else{
+                                            System.out.printf("输入的学号 %s 错误，请确认后重新进行输入!\n", studentId);
+                                        }
+                                    }
+                                    assignStudentFlag = false;
+                                    break;
+                                case 3:
+                                    
+                                    break;
+                                default:
+                                    System.out.println("请输入正确的选项!\n");
+                                    break;
+                            }
 
                         }
                     }

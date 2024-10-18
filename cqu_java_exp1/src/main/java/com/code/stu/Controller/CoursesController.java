@@ -3,6 +3,8 @@ package com.code.stu.Controller;
 import com.code.stu.Service.impl.CoursesService;
 import com.code.stu.Service.impl.ViewService;
 import com.code.stu.entity.Courses;
+import com.code.stu.entity.Student;
+import com.code.stu.entity.Teacher;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -13,7 +15,7 @@ public class CoursesController {
 
     private ViewService viewService=new ViewService();
 
-    public void CoursesInfoManagement(ArrayList<Courses> courses){
+    public void CoursesInfoManagement(ArrayList<Student> students, ArrayList<Teacher> teachers,ArrayList<Courses> courses){
         Scanner sc=new Scanner(System.in);
         boolean courseFlag=true;
         while(courseFlag){
@@ -30,8 +32,8 @@ public class CoursesController {
                     }
                     break;
                 case 2:
+                    coursesService.assignCourse(students,teachers,courses);
                     break;
-
                 case 3:
                     coursesService.alterCourseShow(courses);
                     break;
