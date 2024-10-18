@@ -1,6 +1,7 @@
 package org.cquer;
 
 
+import com.code.stu.Controller.CoursesController;
 import com.code.stu.Controller.StudentController;
 import com.code.stu.Controller.TeacherController;
 import com.code.stu.Service.impl.CoursesService;
@@ -58,6 +59,8 @@ public class Main {
                     break;
                 case 3:
                     //课程信息管理
+                    CoursesController cc=new CoursesController();
+                    cc.CoursesInfoManagement(courses);
                     break;
                 case 4:
                     //成绩信息管理

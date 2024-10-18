@@ -1,12 +1,16 @@
 package com.code.stu.Service.impl;
 
 import com.code.stu.Service.ViewInterface;
+import com.code.stu.entity.Courses;
 import com.code.stu.entity.Student;
 import com.code.stu.entity.Teacher;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.*;
+
+import static com.code.stu.Service.impl.CoursesService.CLASS_ID_LIST_SIZE;
+import static com.code.stu.Service.impl.CoursesService.CLASS_NUM;
 
 @Service
 public class ViewService implements ViewInterface {
@@ -21,9 +25,13 @@ public class ViewService implements ViewInterface {
             e.printStackTrace();
         }
     }
+
+    public static final int RANGE = 80;
+
+    Random r = new Random();
+    Scanner sc=new Scanner(System.in);
     @Override
     public void welcomeInterface(){
-//        clearScreen();
         System.out.println("欢迎使用学生成绩管理系统！！！");
         String art =
                         " W   W  EEEEE  L      CCCC  OOO  M   M  EEEEE \n" +
@@ -44,7 +52,6 @@ public class ViewService implements ViewInterface {
     }
     @Override
     public void StudentShowInterface(){
-//        clearScreen();
         System.out.println("学生信息管理");
         System.out.println("1. 添加学生信息");
         System.out.println("2. 删除学生信息");
@@ -55,7 +62,6 @@ public class ViewService implements ViewInterface {
     }
     @Override
     public Student StudentInterface(){
-        Scanner sc=new Scanner(System.in);
         System.out.println("姓名：");
         String name = sc.nextLine();
         System.out.println("学号：");
@@ -75,7 +81,6 @@ public class ViewService implements ViewInterface {
     }
     @Override
     public void TeacherShowInterface(){
-        clearScreen();
         System.out.println("教师信息管理");
         System.out.println("1. 添加教师信息");
         System.out.println("2. 删除教师信息");
@@ -86,7 +91,6 @@ public class ViewService implements ViewInterface {
 
     @Override
     public Teacher TeacherInterface() {
-        Scanner sc=new Scanner(System.in);
         System.out.println("教师编号：");
         String id = sc.nextLine();
         System.out.println("教师姓名：");
@@ -97,16 +101,57 @@ public class ViewService implements ViewInterface {
 
     @Override
     public void CourseShowInterface(){
-        clearScreen();
-        System.out.println("课程信息管理");
-        System.out.println("1. 添加课程信息");
-        System.out.println("2. 删除课程信息");
-        System.out.println("3. 修改课程信息");
-        System.out.println("4. 查看课程信息");
-        System.out.println("5. 返回上一级");
-    }@Override
+        System.out.println("课程管理");
+        System.out.println("1. 添加课程");
+        System.out.println("2. 选择课程");
+        System.out.println("3. 查看课程");//Todo:查看所有课程的信息 或 通过课程编号/课程名称查看其信息
+        System.out.println("4. 返回上一级");
+    }
+
+    @Override
+    public Optional<Courses> CourseInterface(ArrayList<String> classIdArray,ArrayList<Courses> courses) {
+        StringBuilder sb = new StringBuilder();
+        System.out.println("所属学院：");//ToDo:验证是否在已有的学院里，否则不予通过
+        String department=sc.nextLine();
+        System.out.println("课程编号：");//Todo:可以加上课程编号的正则匹配式
+        String courseId = sc.nextLine();
+        Optional<Courses> opId = courses.stream().filter((Courses c) -> c.getCourseId().equals(courseId)).findFirst();
+        System.out.println("课程名称：");
+        String courseName = sc.nextLine();
+        Optional<Courses> optName=courses.stream().filter((Courses c)->c.getCourseName().equals(courseName)).findFirst();
+        ArrayList<String> curClassId=new ArrayList<>();
+        //将对应的课程也加入到classIdArray中，更新含有的classId
+        if(optName.isPresent()){
+            sb.append("该课程名称已存在，添加失败，请确保要添加的课程为新课程：").append(courseName);
+            System.out.println(sb);
+            return Optional.empty();
+        }
+        else if(opId.isPresent()){
+            sb.append("该课程编号已存在，添加失败，请确保要添加的课程为新课程：").append(courseId);
+            System.out.println(sb);
+            return Optional.empty();
+        }
+        else{
+            for (int i = 0; i <CLASS_ID_LIST_SIZE ; i++) {
+                int randomNum = r.nextInt(RANGE) + CLASS_NUM;
+                classIdArray.add("CLASS" +randomNum );
+                curClassId.add("CLASS" + randomNum);
+            }
+            ArrayList<Double> weight = new ArrayList<>(Arrays.asList(0.3, 0.1, 0.4, 0.2));
+            Courses course = Courses.builder()
+                    .department(department)
+                    .courseId(courseId)
+                    .courseName(courseName)
+                    .classId(curClassId)
+                    .weight(weight)
+                    .isAssigned(false)
+                    .build();
+            return Optional.of(course);
+        }
+    }
+
+    @Override
     public void ScoresShowInterface(){
-        clearScreen();
         System.out.println("成绩信息管理");
         System.out.println("1. 添加成绩信息");
         System.out.println("2. 删除成绩信息");
@@ -116,16 +161,11 @@ public class ViewService implements ViewInterface {
     }
     @Override
     public void ClassShowInterface(){
-        clearScreen();
         System.out.println("教学班信息管理");
-        System.out.println("1. 添加教学班信息");
-        System.out.println("2. 删除教学班信息");
-        System.out.println("3. 修改教学班信息");
-        System.out.println("4. 查看教学班信息");
-        System.out.println("5. 返回上一级");
+        System.out.println("1.查看教学班信息");
+        System.out.println("2. 返回上一级");
     }
     public void QueryScoresShowInterface(){
-        clearScreen();
         System.out.println("成绩查询系统");
         System.out.println("1. 教学班号查询教学班级学生成绩"); //需要键入一个classId
         System.out.println("2. 学号查询学生的成绩"); //需要键入一个stuId

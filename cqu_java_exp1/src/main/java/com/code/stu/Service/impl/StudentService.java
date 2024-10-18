@@ -17,15 +17,17 @@ public class StudentService
 //        extends ServiceImpl<StudentMapper, Student>
         implements StudentInterface {
     private static final String[] FIRST_NAMES = {
-            "Liam", "Emma", "Noah", "Olivia", "Oliver",
-            "Ava", "Elijah", "Sophia", "James", "Isabella",
-            "William", "Mia", "Benjamin", "Charlotte", "Lucas"
+            "伟", "芳", "娜", "静", "军",
+            "涛", "丽", "强", "燕", "敏",
+            "鹏", "娟", "辉", "梅", "鑫",
+            "琪", "杰", "超", "莉", "宁"
     };
 
     private static final String[] LAST_NAMES = {
-            "Smith", "Johnson", "Williams", "Brown", "Jones",
-            "Garcia", "Miller", "Davis", "Rodriguez", "Martinez",
-            "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson"
+            "张", "王", "李", "赵", "刘",
+            "陈", "杨", "黄", "吴", "徐",
+            "孙", "马", "朱", "胡", "林",
+            "郭", "何", "高", "罗", "曾"
     };
     private static final String[] SEX={"男","女"};
     private static final String[] GRADE = {"Freshman","Sophomore","Junior","Senior"};
@@ -39,9 +41,9 @@ public class StudentService
         ArrayList<Student> students = new ArrayList<>();
         Random r = new Random();
 
-        //随机出firstName与lastName的个数 进行随机组合 [10-15]*[10-15]=totalStudents
-        int firstNameNum = r.nextInt(FIRST_NAMES.length-9)+10;
-        int lastNameNum = r.nextInt(LAST_NAMES.length-9)+10;
+        //随机出firstName与lastName的个数 进行随机组合 [15-20]*[15-20]=totalStudents
+        int firstNameNum = r.nextInt(FIRST_NAMES.length-14)+15;
+        int lastNameNum = r.nextInt(LAST_NAMES.length-14)+15;
 
         for(int i=0;i<firstNameNum;i++){
             for(int j=0;j<lastNameNum;j++){
@@ -52,7 +54,7 @@ public class StudentService
                 Map.Entry<String, String> entry = coursesService.GenerateEntry();
                 for(int k=0;k<EACH_SELECT_NUM;k++){
                     //对每个科目随机生成成绩
-                    Scores score=scoresService.RandomGenerrateInfo();
+                    Scores score=scoresService.RandomGenerateInfo();
                     Courses randomCourse=coursesList.get(r.nextInt(coursesList.size()));
                     while(selectedCourses.contains(randomCourse.getCourseName())){
                         randomCourse=coursesList.get(r.nextInt(coursesList.size()));

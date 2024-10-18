@@ -12,9 +12,9 @@ import java.util.Scanner;
 
 @Controller
 public class StudentController {
-//    @Autowired
+
     private StudentService studentService=new StudentService();
-//    @Autowired
+
     private ViewService viewService=new ViewService();
 
 
@@ -63,7 +63,6 @@ public class StudentController {
                     break;
                 case 6:
                     flag=false;
-                    viewService.welcomeInterface();
                     break;
                 default:
                     System.out.println("输入数字无效，请重新输入！");

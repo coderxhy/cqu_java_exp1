@@ -16,7 +16,7 @@ public class ScoresService
 //        extends ServiceImpl<ScoresMapper,Scores>
         implements ScoresInterface {
     @Override
-    public Scores RandomGenerrateInfo(){
+    public Scores RandomGenerateInfo(){
         Random r = new Random();
         int finalTerm=r.nextInt(30)+70;
         int norm=r.nextInt(25)+75;

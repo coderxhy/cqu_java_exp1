@@ -56,7 +56,6 @@ public class TeacherController {
                     break;
                 case 5:
                     flag=false;
-                    viewService.welcomeInterface();
                     break;
                 default:
                     System.out.println("输入数字无效，请重新输入！");
