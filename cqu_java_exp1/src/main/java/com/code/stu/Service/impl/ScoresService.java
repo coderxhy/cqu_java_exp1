@@ -38,13 +38,11 @@ public class ScoresService
         StringBuilder sb=new StringBuilder();
         ArrayList<Student> classStudents=new ArrayList<>();
         String courseName="";
-        for(Courses course:courses){
-            if(course.getClassId().contains(classId)){
-                courseName=course.getCourseName();
-            }else {
-                sb.append("未找到该教学班号对应的课程信息");
-                return sb.toString();
-            }
+        Optional<Courses> optionalCourse=courses.stream().filter(c->c.getClassId().contains(classId)).findFirst();
+        if(optionalCourse.isPresent()){
+            courseName=optionalCourse.get().getCourseName();
+        }else {
+            sb.append("未找到该班级的信息！");
         }
         for(Student student:students){
             if(student.getSelectedCourses().containsValue(classId)){

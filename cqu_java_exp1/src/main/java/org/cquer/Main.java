@@ -1,10 +1,7 @@
 package org.cquer;
 
 
-import com.code.stu.Controller.ClassesController;
-import com.code.stu.Controller.CoursesController;
-import com.code.stu.Controller.StudentController;
-import com.code.stu.Controller.TeacherController;
+import com.code.stu.Controller.*;
 import com.code.stu.Service.impl.*;
 import com.code.stu.entity.Classes;
 import com.code.stu.entity.Courses;
@@ -67,12 +64,14 @@ public class Main {
                     //成绩信息管理
                     break;
                 case 5:
-                    ClassesController ccc=new ClassesController();
+                    ClassesController cct=new ClassesController();
                     ArrayList<Classes> classes = classesService.buildClasses(coursesService.classIdArray, courses, students, teachers);
-                    ccc.ClassesInfoManagement(classes);
+                    cct.ClassesInfoManagement(classes);
                     break;
                 case 6:
                     //成绩查询系统
+                    ScoresController sct=new ScoresController();
+                    sct.ScoresInfoQuery(students,courses);
                     break;
                 case 7:
                     //退出系统

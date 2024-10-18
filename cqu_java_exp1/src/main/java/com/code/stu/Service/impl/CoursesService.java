@@ -6,6 +6,7 @@ import com.code.stu.entity.Student;
 import com.code.stu.entity.Teacher;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -136,6 +137,59 @@ public class CoursesService
                 System.out.println("-------------------------------");
                 List<Courses> assignedCourses = courses.stream().filter(Courses::isAssigned)
                                                        .collect(Collectors.toList());
+                System.out.println("以下是已分配的所有课程的信息......\n");
+                assignedCourses.forEach(new CoursesService()::showCourseAllInfo);
+                while (true) {
+                    System.out.println("请输入你要分配课程的课程编号(输入-1时终止课程分配)：");
+                    String courseId = sc.next();
+                    if(courseId.equals("-1")){
+                        break;
+                    }
+                    Optional<Courses> courseOpt=assignedCourses.stream().filter(c->c.getCourseId().equals(courseId)).findFirst();
+                    if(courseOpt.isPresent()){
+                        Courses c = courseOpt.get();
+                        System.out.println("学生的基本信息如下：");
+                        students.forEach(new StudentService()::viewStuBasicInfo);
+                        System.out.println("该课程的教学班号信息如下：");
+                        c.getClassId().forEach(System.out::println);
+                        boolean assignFlag = true;
+                        while (assignFlag) {
+                            System.out.printf("请输入你要进行的操作" +
+                                    "\n1.进行 %s 课程的选课" +
+                                    "\n2.结束当前课程的选课，进行下一个课程的选课\n", c.getCourseName());
+                            switch(sc.nextInt()){
+                                case 1:
+                                    System.out.println("请输入教学班号：");
+                                    String assignClass = sc.next();
+                                    if (!c.getClassId().contains(assignClass)){
+                                        System.out.println("输入教学班号错误，请从该课程的对应教学班中选择!");
+                                        continue;
+                                    }
+                                    System.out.println("请输入学生学号：");
+                                    String assignStuId = sc.next();
+                                    Optional<Student> stuOpt = students.stream().filter(s -> s.getStuId().equals(assignStuId)).findFirst();
+                                    if(stuOpt.isPresent()){
+                                        System.out.printf("成功为学号为 %s 的学生选了 %s 课程的 %s 教学班\n", assignStuId, c.getCourseName(), assignClass);
+                                        Student stu=stuOpt.get();
+                                        int id = students.indexOf(stu);
+                                        stu.getSelectedCourses().put(c.getCourseName(), assignClass);
+                                        students.set(id, stu);
+                                    }
+                                    else{
+                                        System.out.printf("输入的学号 %s 错误，请确认后重新进行选课操作!\n", assignStuId);
+                                    }
+                                    break;
+                                case 2:
+                                    assignFlag = false;
+                                    break;
+                                default:
+                                    System.out.println("请输入正确的选项!\n");
+                                    break;
+                            }
+
+                        }
+                    }
+                }
                 break;
             case 2:
                 List<Courses> unassignedCourses = courses.stream().filter(course -> !course.isAssigned())
@@ -149,6 +203,8 @@ public class CoursesService
                 * 每个课程的每个教学班给它分配至少20个学生
                 * */
                 for (Courses course : unassignedCourses) {
+                    //将状态转变为已经分配
+                    course.setAssigned(true);
                     System.out.printf("请为 %s 课程分配至少两个老师", course.getCourseName());
                     int count=0;
                     boolean assignTeacherFlag = true;
