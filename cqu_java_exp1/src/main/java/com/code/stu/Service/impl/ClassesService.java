@@ -5,10 +5,11 @@ import com.code.stu.entity.Classes;
 import com.code.stu.entity.Courses;
 import com.code.stu.entity.Student;
 import com.code.stu.entity.Teacher;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
+@Service
 public class ClassesService implements ClassesInterface {
     public final String[] beginTerms = {"2022年秋", "2023年春", "2023年秋", "2024年春", "2024年秋"};
 

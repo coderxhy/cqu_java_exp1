@@ -10,19 +10,22 @@ import org.springframework.stereotype.Service;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 @Service
 public class ScoresService
 //        extends ServiceImpl<ScoresMapper,Scores>
         implements ScoresInterface {
     @Override
-    public Scores RandomGenerateInfo(){
+    public Scores RandomGenerateInfo(Courses course){
         Random r = new Random();
         int finalTerm=r.nextInt(30)+70;
         int norm=r.nextInt(25)+75;
         int midTerm=r.nextInt(20)+80;
         int lab=r.nextInt(15)+85;
-        int total=finalTerm+norm+midTerm+lab;
+        List<Double> weight=course.getWeight();
+        Double totalScores=norm*weight.get(0)+midTerm*weight.get(1)+finalTerm*weight.get(2)+lab*weight.get(3);
+        Integer total=totalScores.intValue();
         Scores score=new Scores(norm,midTerm,finalTerm,lab,total,new Date());
         return score;
     }
@@ -103,7 +106,7 @@ public class ScoresService
         return sb.toString();
     }
     @Override
-    public String showDistributionOfScores(ArrayList<Student> students){
+    public void showDistributionOfScores(ArrayList<Student> students){
         StringBuilder sb=new StringBuilder();
         //统计某位学生各科成绩的分数段分布
         //统计所有学生某科成绩的分数段分布
@@ -116,39 +119,37 @@ public class ScoresService
             case 1:
                 System.out.println("请输入学号:");
                 String stuId = scanner.next();
-                for (Student student : students) {
-                    if (student.getStuId().equals(stuId)) {
-                        //<分数段,课程数> 先初始化一个哈希，数量为10 key为"0-9","10-19"... value为0
-                        //根据该学生每一门的课程最终成绩进行统计
-                        for (String courseName : student.getStuCourses().keySet()) {
-                            int totalScore = student.getStuCourses().get(courseName).getTotalScore();
-                            String key = "";
-                            if (totalScore >= 0 && totalScore <= 9) {
-                                key = "0-9";
-                            } else if (totalScore >= 10 && totalScore <= 19) {
-                                key = "10-19";
-                            } else if (totalScore >= 20 && totalScore <= 29) {
-                                key = "20-29";
-                            } else if (totalScore >= 30 && totalScore <= 39) {
-                                key = "30-39";
-                            } else if (totalScore >= 40 && totalScore <= 49) {
-                                key = "40-49";
-                            } else if (totalScore >= 50 && totalScore <= 59) {
-                                key = "50-59";
-                            } else if (totalScore >= 60 && totalScore <= 69) {
-                                key = "60-69";
-                            } else if (totalScore >= 70 && totalScore <= 79) {
-                                key = "70-79";
-                            } else if (totalScore >= 80 && totalScore <= 89) {
-                                key = "80-89";
-                            } else if (totalScore >= 90 && totalScore <= 100) {
-                                key = "90-100";
-                            }
-                            scoreDistribution.put(key, scoreDistribution.getOrDefault(key, 0) + 1);
+                Optional<Student> opt = students.stream().filter(student -> student.getStuId().equals(stuId)).findFirst();
+                if(opt.isPresent()){
+                    Student student=opt.get();
+                    for (String courseName : student.getStuCourses().keySet()) {
+                        int totalScore = student.getStuCourses().get(courseName).getTotalScore();
+                        String key = "";
+                        if (totalScore >= 0 && totalScore <= 9) {
+                            key = "0-9";
+                        } else if (totalScore >= 10 && totalScore <= 19) {
+                            key = "10-19";
+                        } else if (totalScore >= 20 && totalScore <= 29) {
+                            key = "20-29";
+                        } else if (totalScore >= 30 && totalScore <= 39) {
+                            key = "30-39";
+                        } else if (totalScore >= 40 && totalScore <= 49) {
+                            key = "40-49";
+                        } else if (totalScore >= 50 && totalScore <= 59) {
+                            key = "50-59";
+                        } else if (totalScore >= 60 && totalScore <= 69) {
+                            key = "60-69";
+                        } else if (totalScore >= 70 && totalScore <= 79) {
+                            key = "70-79";
+                        } else if (totalScore >= 80 && totalScore <= 89) {
+                            key = "80-89";
+                        } else if (totalScore >= 90 && totalScore <= 100) {
+                            key = "90-100";
                         }
-                    } else {
-                        sb.append("未找到该学号对应的学生信息");
+                        scoreDistribution.put(key, scoreDistribution.getOrDefault(key, 0) + 1);
                     }
+                }else {
+                    sb.append("未找到该学号对应的学生信息");
                 }
                 break;
             case 2:
@@ -204,7 +205,7 @@ public class ScoresService
 
         // 显示对话框
         jd.setVisible(true);
-        return sb.toString();
+        System.out.println(sb);
     }
     @Override
     public String showScoresOfAllStudents(ArrayList<Student> students){
