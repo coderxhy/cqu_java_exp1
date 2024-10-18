@@ -42,8 +42,7 @@ public class ScoresController {
                     break;
 
                 case 4:
-                    String res3 = scoresService.showDistributionOfScores(students);
-                    System.out.println(res3);
+                    scoresService.showDistributionOfScores(students);
                     break;
 
                 case 5:
