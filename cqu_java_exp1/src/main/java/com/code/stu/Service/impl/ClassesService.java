@@ -31,7 +31,7 @@ public class ClassesService implements ClassesInterface {
     @Override
     public Map<String, Long> countStudentPerClass(ArrayList<Student> students) {
 
-            return students.stream()
+            return students.stream().filter(s->s.getSelectedCourses()!=null)
                     .flatMap(student -> student.getSelectedCourses().values().stream())
                     .collect(Collectors.groupingBy(classId -> classId, Collectors.counting()));
     }
@@ -42,17 +42,27 @@ public class ClassesService implements ClassesInterface {
         ArrayList<Classes> classes = new ArrayList<>();
         Random r = new Random();
         for(String classId : classIdArray) {
-            Optional<Teacher> teacherOpt = teacherArray.stream().filter(t -> t.getClassId().contains(classId)).findFirst();
+            Optional<Teacher> teacherOpt = teacherArray.stream().filter(t->t.getClassId()!=null).filter(t -> t.getClassId().contains(classId)).findFirst();
             Optional<Courses> coursesOpt = coursesArray.stream().filter(c -> c.getClassId().contains(classId)).findFirst();
             Map<String,Long> countMap =countStudentPerClass(stuArray);
             //由于分配一定是存在的，直接teacherOpt.get()即可
-            Classes eachClass=Classes.builder().teacherId(teacherOpt.get().getTeacherId())
-                    .courseName(coursesOpt.get().getCourseName())
-                    .totalStudentNum(Math.toIntExact(countMap.get(classId)))
-                    .classId(classId)
-                    .BeginTerm(beginTerms[r.nextInt(beginTerms.length)])
-                    .build();
-            classes.add(eachClass);
+            if(teacherOpt.isPresent()) {
+                Classes eachClass=Classes.builder().teacherId(teacherOpt.get().getTeacherId())
+                        .courseName(coursesOpt.get().getCourseName())
+                        .totalStudentNum(Math.toIntExact(countMap.get(classId)))
+                        .classId(classId)
+                        .BeginTerm(beginTerms[r.nextInt(beginTerms.length)])
+                        .build();
+                classes.add(eachClass);
+            }else{
+                Classes anotherClass = Classes.builder()
+                        .courseName(coursesOpt.get().getCourseName())
+                        .totalStudentNum(0)
+                        .classId(classId)
+                        .BeginTerm(beginTerms[r.nextInt(beginTerms.length)])
+                        .build();
+                classes.add(anotherClass);
+            }
         }
         return classes;
     }

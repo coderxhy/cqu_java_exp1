@@ -2,6 +2,7 @@ package com.code.stu.Service.impl;
 
 import com.code.stu.Service.StudentInterface;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.code.stu.entity.Classes;
 import com.code.stu.entity.Courses;
 import com.code.stu.entity.Scores;
 import com.code.stu.entity.Student;
@@ -107,10 +108,22 @@ public class StudentService
         }
     }
     @Override
-    public String deleteStuById(String StuId,ArrayList<Student> students){
+    public String deleteStuById(String StuId, ArrayList<Student> students, ArrayList<Classes> classes){
         StringBuilder sb=new StringBuilder();
         Optional<Student> opt= students.stream().filter((Student s)->s.getStuId().equals(StuId)).findFirst();
         if(opt.isPresent()){
+            if (opt.get().getSelectedCourses()!=null) {
+                for (Map.Entry<String,String> entry : opt.get().getSelectedCourses().entrySet()) {
+                    String classId = entry.getValue();
+                    Optional<Classes> optClass = classes.stream().filter(c -> c.getClassId().equals(classId)).findFirst();
+                    //进入map中后一定能查找到对应classId，无需opt.isPresent()检查
+                    Classes selectedClass=optClass.get();
+                    int id = classes.indexOf(selectedClass);
+                    selectedClass.setTotalStudentNum(selectedClass.getTotalStudentNum()-1);
+                    classes.set(id,selectedClass);
+                    System.out.printf("已删除该学生在 %s 教学班的记录，剩余总人数为：%d\n",selectedClass.getClassId(),selectedClass.getTotalStudentNum());
+                }
+            }
             students.remove(opt.get());
             sb.append("成功通过学号删除学生信息，删除的学生的基本信息——\t学号：")
                     .append(opt.get().getStuId())
@@ -166,7 +179,7 @@ public class StudentService
                 .append("\t专业：").append(s.getMajor())
                 .append("\t年级：").append(s.getGrade())
                 .append("\t已选课程表：").append(s.getSelectedCourses())
-                .append("\n科目成绩表").append(s.getStuCourses());
+                .append("\n科目成绩表:").append(s.getStuCourses());
         System.out.println(sb);
     }
 }

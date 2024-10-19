@@ -2,6 +2,7 @@ package com.code.stu.Controller;
 
 import com.code.stu.Service.impl.StudentService;
 import com.code.stu.Service.impl.ViewService;
+import com.code.stu.entity.Classes;
 import com.code.stu.entity.Courses;
 import com.code.stu.entity.Student;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,7 @@ import java.util.Scanner;
 @Controller
 public class StudentController {
 
-    public void StudentInfoManagement(ArrayList<Student> students, ArrayList<Courses> courses){
+    public void StudentInfoManagement(ArrayList<Student> students, ArrayList<Classes> classes){
         Scanner sc=new Scanner(System.in);
         boolean flag=true;
         while(flag){
@@ -29,7 +30,7 @@ public class StudentController {
                 case 2:
                     System.out.println("请输入你要删除的学生信息的学号：");
                     String delelteId=sc.next();
-                    String deleteRes=StudentService.getInstance().deleteStuById(delelteId,students);
+                    String deleteRes=StudentService.getInstance().deleteStuById(delelteId,students,classes);
                     System.out.println(deleteRes);
                     break;
                 case 3:

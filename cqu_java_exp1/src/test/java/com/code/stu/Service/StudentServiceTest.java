@@ -2,6 +2,7 @@ package com.code.stu.Service;
 
 import com.code.stu.Service.impl.CoursesService;
 import com.code.stu.Service.impl.StudentService;
+import com.code.stu.entity.Classes;
 import com.code.stu.entity.Courses;
 import com.code.stu.entity.Student;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,8 @@ public class StudentServiceTest {
     @Test
     public void testDeleteStuById(){
         ArrayList<Student> arrayStu=testStudent();
-        String res=StudentService.getInstance().deleteStuById("20221545",arrayStu);
+        ArrayList<Classes> classes = new ArrayList<>();
+        String res=StudentService.getInstance().deleteStuById("20221545",arrayStu,classes);
         System.out.println(res);
         arrayStu.forEach(StudentService.getInstance()::viewStuBasicInfo);
     }

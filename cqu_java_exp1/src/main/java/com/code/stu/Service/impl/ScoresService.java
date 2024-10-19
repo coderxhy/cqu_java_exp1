@@ -46,6 +46,66 @@ public class ScoresService
     }
 
     @Override
+    public String updateScoresInfo(ArrayList<Student> students,ArrayList<Courses> courses) {
+        StringBuilder sb=new StringBuilder();
+        Scanner sc=new Scanner(System.in);
+
+        while (true) {
+            System.out.println("请输入你要更新成绩的学生学号：");
+            String stuId = sc.next();
+            Optional<Student> studentOpt = students.stream().filter(s -> s.getStuId().equals(stuId)).findFirst();
+            if(studentOpt.isPresent()){
+                Student stu=studentOpt.get();
+                int id = students.indexOf(stu);
+                if (stu.getSelectedCourses() == null) {
+                    sb.append("该学生还未选课，快去为他选课吧！");
+                    break;
+                }
+                else {
+                    System.out.printf("以下是 %s 学生的所有课程\n",stu.getStuName());
+                    stu.getSelectedCourses().keySet().stream().forEach(System.out::println);
+                    while (true) {
+                        System.out.println("请输入要更新成绩的课程名称:");
+                        String name = sc.next();
+                        if(stu.getSelectedCourses().containsKey(name)){
+                            Optional<Courses> coursesOpt = courses.stream().filter(c -> c.getCourseName().equals(name)).findFirst();
+                            System.out.println("请按照 平时成绩，中期成绩，期末成绩，实验成绩的顺序依次键入要更新的成绩值");
+                            int norm = sc.nextInt();
+                            int midTerm = sc.nextInt();
+                            int finalTerm = sc.nextInt();
+                            int lab = sc.nextInt();
+                            List<Double> weight = coursesOpt.get().getWeight();
+                            int total=(int)(norm*weight.get(0)+midTerm*weight.get(1)+finalTerm*weight.get(2)+lab*weight.get(3));
+                            Scores score=new Scores(norm,midTerm,finalTerm,lab,total,new Date());
+                            stu.getStuCourses().put(name,score);
+                            students.set(id, stu);
+                            sb.append("更新成绩成功!")
+                                    .append("已为学生:").append(stu.getStuName())
+                                    .append("的课程：").append(name)
+                                    .append("更新了以下成绩：\n平时成绩：")
+                                    .append(norm)
+                                    .append("\t中期成绩：").append(midTerm)
+                                    .append("\t期末成绩：").append(finalTerm)
+                                    .append("\t实验成绩：").append(lab)
+                                    .append("\t总成绩：").append(total)
+                                    .append("\n");
+                            break;
+                        }
+                        else{
+                            System.out.println("输入课程名称错误，请重新输入!");
+                        }
+                    }
+                }
+                break;
+            }
+            else{
+                System.out.println("输入的学生学号有误，请重新输入!");
+            }
+        }
+        return sb.toString();
+    }
+
+    @Override
     public String queryScoresByClassId(String classId, ArrayList<Student> students, ArrayList<Courses>courses){
         //根据classId得到该教学班的课程名称
         //先查找每个student中是否存在该教学班号 放入一个新的集合内 再根据这些学生的课程名称对应的成绩对象中的总成绩进行排序
@@ -92,8 +152,13 @@ public class ScoresService
         for(Student student:students){
             if(student.getStuId().equals(stuId)){
                 sb.append("学号: ").append(student.getStuId()).append(" 姓名: ").append(student.getStuName()).append(" 性别: ").append(student.getSex()).append("\n");
-                for(String courseName:student.getStuCourses().keySet()){
-                    sb.append("课程名称: ").append(courseName).append(" 平时成绩: ").append(student.getStuCourses().get(courseName).getNormScore()).append(" 期中成绩: ").append(student.getStuCourses().get(courseName).getMidTermScore()).append(" 期末成绩: ").append(student.getStuCourses().get(courseName).getFinalScore()).append(" 实验成绩: ").append(student.getStuCourses().get(courseName).getLabScore()).append(" 总成绩: ").append(student.getStuCourses().get(courseName).getTotalScore()).append("\n");
+                if (student.getStuCourses()!=null) {
+                    for(String courseName:student.getStuCourses().keySet()){
+                        sb.append("课程名称: ").append(courseName).append(" 平时成绩: ").append(student.getStuCourses().get(courseName).getNormScore()).append(" 期中成绩: ").append(student.getStuCourses().get(courseName).getMidTermScore()).append(" 期末成绩: ").append(student.getStuCourses().get(courseName).getFinalScore()).append(" 实验成绩: ").append(student.getStuCourses().get(courseName).getLabScore()).append(" 总成绩: ").append(student.getStuCourses().get(courseName).getTotalScore()).append("\n");
+                    }
+                }
+                else {
+                    sb.append("该学生的暂无成绩单，快去更新吧！\n");
                 }
                 sb.append("______________________________________________________\n");
                 return sb.toString();
@@ -108,8 +173,13 @@ public class ScoresService
         for(Student student:students){
             if(student.getStuName().equals(stuName)){
                 sb.append("学号: ").append(student.getStuId()).append(" 姓名: ").append(student.getStuName()).append(" 性别: ").append(student.getSex()).append("\n");
-                for(String courseName:student.getStuCourses().keySet()){
-                    sb.append("课程名称: ").append(courseName).append(" 平时成绩: ").append(student.getStuCourses().get(courseName).getNormScore()).append(" 期中成绩: ").append(student.getStuCourses().get(courseName).getMidTermScore()).append(" 期末成绩: ").append(student.getStuCourses().get(courseName).getFinalScore()).append(" 实验成绩: ").append(student.getStuCourses().get(courseName).getLabScore()).append(" 总成绩: ").append(student.getStuCourses().get(courseName).getTotalScore()).append("\n");
+                if (student.getStuCourses()!=null) {
+                    for(String courseName:student.getStuCourses().keySet()){
+                        sb.append("课程名称: ").append(courseName).append(" 平时成绩: ").append(student.getStuCourses().get(courseName).getNormScore()).append(" 期中成绩: ").append(student.getStuCourses().get(courseName).getMidTermScore()).append(" 期末成绩: ").append(student.getStuCourses().get(courseName).getFinalScore()).append(" 实验成绩: ").append(student.getStuCourses().get(courseName).getLabScore()).append(" 总成绩: ").append(student.getStuCourses().get(courseName).getTotalScore()).append("\n");
+                    }
+                }
+                else {
+                    sb.append("该学生的暂无成绩单，快去更新吧！\n");
                 }
                 sb.append("______________________________________________________\n");
                 return sb.toString();

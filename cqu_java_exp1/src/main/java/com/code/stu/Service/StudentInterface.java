@@ -1,6 +1,7 @@
 package com.code.stu.Service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.code.stu.entity.Classes;
 import com.code.stu.entity.Courses;
 import com.code.stu.entity.Student;
 
@@ -12,7 +13,7 @@ public interface StudentInterface
 {
     ArrayList<Student> randomGenerateInfo(ArrayList<Courses> coursesList);
     String appendStuInfo(Student s,ArrayList<Student> students);
-    String deleteStuById(String StuId,ArrayList<Student> students);
+    String deleteStuById(String StuId,ArrayList<Student> students,ArrayList<Classes> classes);
     String updateStuInfo(Student stu, Optional<Student> opt);
     void viewStuBasicInfo(Student s);
     void viewStuAllInfo(Student s);

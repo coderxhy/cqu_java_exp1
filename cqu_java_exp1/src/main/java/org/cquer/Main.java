@@ -15,7 +15,7 @@ public class Main {
         ArrayList<Courses> courses=CoursesService.getInstance().randomGenerateInfo();
         ArrayList<Student> students=StudentService.getInstance().randomGenerateInfo(courses);
         ArrayList<Teacher> teachers=TeacherService.getInstance().randomGenerateInfo(courses);
-
+        ArrayList<Classes> classes;
         boolean inSystem = true;
         while (inSystem) {
             ViewService.getInstance().welcomeInterface();
@@ -23,7 +23,8 @@ public class Main {
                 case 1:
                     //学生信息管理
                     StudentController sc=new StudentController();
-                    sc.StudentInfoManagement(students,courses);
+                    classes = ClassesService.getInstance().buildClasses(CoursesService.getInstance().classIdArray, courses, students, teachers);
+                    sc.StudentInfoManagement(students,classes);
                     break;
                 case 2:
                     //教师信息管理
@@ -33,20 +34,21 @@ public class Main {
                 case 3:
                     //课程信息管理
                     CoursesController cc=new CoursesController();
-                    cc.CoursesInfoManagement(students,teachers,courses);
+                    classes = ClassesService.getInstance().buildClasses(CoursesService.getInstance().classIdArray, courses, students, teachers);
+                    cc.CoursesInfoManagement(students,teachers,courses,classes);
                     break;
                 case 4:
                     //成绩信息管理
+                    ScoresController.getInstance().ScoresUpdateInfo(students,courses);
                     break;
                 case 5:
                     ClassesController cct=new ClassesController();
-                    ArrayList<Classes> classes = ClassesService.getInstance().buildClasses(CoursesService.getInstance().classIdArray, courses, students, teachers);
+                    classes = ClassesService.getInstance().buildClasses(CoursesService.getInstance().classIdArray, courses, students, teachers);
                     cct.ClassesInfoManagement(classes);
                     break;
                 case 6:
                     //成绩查询系统
-                    ScoresController sct=new ScoresController();
-                    sct.ScoresInfoQuery(students,courses);
+                    ScoresController.getInstance().ScoresInfoQuery(students,courses);
                     break;
                 case 7:
                     //退出系统

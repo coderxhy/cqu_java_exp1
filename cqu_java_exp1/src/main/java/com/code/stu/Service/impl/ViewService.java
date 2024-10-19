@@ -172,11 +172,8 @@ public class ViewService implements ViewInterface {
     @Override
     public void ScoresShowInterface(){
         System.out.println("成绩信息管理");
-        System.out.println("1. 添加成绩信息");
-        System.out.println("2. 删除成绩信息");
-        System.out.println("3. 修改成绩信息");
-        System.out.println("4. 查看成绩信息");
-        System.out.println("5. 返回上一级");
+        System.out.println("1. 更新成绩信息");
+        System.out.println("2. 返回上一级");
     }
     @Override
     public void ClassShowInterface(){

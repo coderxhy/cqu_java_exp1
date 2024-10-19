@@ -86,8 +86,9 @@ public class TeacherService
         StringBuilder sb=new StringBuilder();
         Optional<Teacher> opt= teachers.stream().filter((Teacher t)-> Objects.equals(TeacherId, t.getTeacherId())).findFirst();
         if(opt.isPresent()){
+            //Todo:删除教师信息时同步删去 对应classId的classes对象的teacherId
             teachers.remove(opt.get());
-            sb.append("成功通过教室编号删除教室信息，删除的教师的信息——教师编号：").append(opt.get().getTeacherId())
+            sb.append("成功通过教师编号删除教师信息，删除的教师的信息——教师编号：").append(opt.get().getTeacherId())
                     .append("\t姓名：").append(opt.get().getTeacherName());
             return sb.toString();
         }

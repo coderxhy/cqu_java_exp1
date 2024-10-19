@@ -2,6 +2,7 @@ package com.code.stu.Controller;
 
 import com.code.stu.Service.impl.CoursesService;
 import com.code.stu.Service.impl.ViewService;
+import com.code.stu.entity.Classes;
 import com.code.stu.entity.Courses;
 import com.code.stu.entity.Student;
 import com.code.stu.entity.Teacher;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 
 public class CoursesController {
 
-    public void CoursesInfoManagement(ArrayList<Student> students, ArrayList<Teacher> teachers,ArrayList<Courses> courses){
+    public void CoursesInfoManagement(ArrayList<Student> students, ArrayList<Teacher> teachers,ArrayList<Courses> courses, ArrayList<Classes> classes){
         Scanner sc=new Scanner(System.in);
         boolean courseFlag=true;
         while(courseFlag){
@@ -28,7 +29,7 @@ public class CoursesController {
                     }
                     break;
                 case 2:
-                    CoursesService.getInstance().assignCourse(students,teachers,courses);
+                    CoursesService.getInstance().assignCourse(students,teachers,courses,classes);
                     break;
                 case 3:
                     CoursesService.getInstance().alterCourseShow(courses);

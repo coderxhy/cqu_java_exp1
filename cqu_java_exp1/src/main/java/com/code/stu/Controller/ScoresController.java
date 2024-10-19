@@ -11,6 +11,38 @@ import java.util.Scanner;
 
 @Controller
 public class ScoresController {
+    private static ScoresController Instance;
+
+    private ScoresController(){}
+
+    public static ScoresController getInstance(){
+        if(Instance==null){
+            synchronized(ScoresController.class){
+                if(Instance==null){
+                    Instance=new ScoresController();
+                }
+            }
+        }
+        return Instance;
+    }
+    public void ScoresUpdateInfo(ArrayList<Student> students, ArrayList<Courses> courses){
+        Scanner sc=new Scanner(System.in);
+        boolean flag=true;
+        while(flag){
+            ViewService.getInstance().ScoresShowInterface();
+            switch(sc.nextInt()){
+                case 1:
+                    System.out.println(ScoresService.getInstance().updateScoresInfo(students, courses));
+                    break;
+                case 2:
+                    flag=false;
+                    break;
+                default:
+                    System.out.println("输入数字无效，请重新输入！");
+                    break;
+            }
+        }
+    }
 
     public void ScoresInfoQuery(ArrayList<Student> students, ArrayList<Courses> courses){
         Scanner sc=new Scanner(System.in);
@@ -50,7 +82,6 @@ public class ScoresController {
 
                 case 6:
                     flag=false;
-                    ViewService.getInstance().welcomeInterface();
                     break;
 
                 default:

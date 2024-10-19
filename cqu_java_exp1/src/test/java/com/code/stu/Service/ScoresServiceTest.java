@@ -58,7 +58,6 @@ public class ScoresServiceTest {
     }
     @Test
     public void testScoresController(){
-        ScoresController scoresController = new ScoresController();
-        scoresController.ScoresInfoQuery(stu,courses);
+        ScoresController.getInstance().ScoresInfoQuery(stu,courses);
     }
 }
