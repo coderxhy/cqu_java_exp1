@@ -6,8 +6,6 @@ import com.code.stu.entity.Courses;
 import com.code.stu.entity.Teacher;
 import com.code.stu.mapper.TeacherMapper;
 import org.springframework.stereotype.Service;
-
-import java.security.PublicKey;
 import java.util.*;
 
 import static com.code.stu.Service.impl.CoursesService.*;
@@ -24,6 +22,22 @@ public class TeacherService
             "Ella White", "Henry Harris", "Grace Martin"
     };
     public  static final int CLASS_SELECT_NUM=2;
+
+    private static TeacherService Instance;
+
+    private TeacherService(){}
+
+    public static TeacherService getInstance(){
+        if(Instance==null){
+            synchronized (TeacherService.class){
+                if(Instance==null){
+                    Instance=new TeacherService();
+                }
+            }
+        }
+        return Instance;
+    }
+
     @Override
     public ArrayList<Teacher> randomGenerateInfo(ArrayList<Courses> coursesList) {
         ArrayList<Teacher> teachers = new ArrayList<>();

@@ -13,32 +13,28 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 public class ClassesServiceTest {
-    private ClassesService classesService=new ClassesService();
-    private StudentService studentService=new StudentService();
-    private CoursesService coursesService = new CoursesService();
-    private TeacherService teacherService=new TeacherService();
 
 
 
     @Test
     public void testBuildClasses(){
         System.out.println("以下是课程ArrayList信息：");
-        ArrayList<Courses> coursesList=coursesService.randomGenerateInfo();
+        ArrayList<Courses> coursesList=CoursesService.getInstance().randomGenerateInfo();
         coursesList.forEach(System.out::println);
         System.out.println();
 
         System.out.println("以下是学生ArrayList信息：");
-        ArrayList<Student> stu = studentService.randomGenerateInfo(coursesList);
-        stu.forEach(studentService::viewStuAllInfo);
+        ArrayList<Student> stu = StudentService.getInstance().randomGenerateInfo(coursesList);
+        stu.forEach(StudentService.getInstance()::viewStuAllInfo);
         System.out.println();
 
         System.out.println("以下是教师ArrayList信息：");
-        ArrayList<Teacher> teacher=teacherService.randomGenerateInfo(coursesList);
-        teacher.forEach(teacherService::viewTeacherAllInfo);
+        ArrayList<Teacher> teacher=TeacherService.getInstance().randomGenerateInfo(coursesList);
+        teacher.forEach(TeacherService.getInstance()::viewTeacherAllInfo);
         System.out.println();
 
         System.out.println("以下是教学班ArrayList信息：");
-        ArrayList<Classes> classes=classesService.buildClasses(coursesService.classIdArray,coursesList,stu,teacher);
+        ArrayList<Classes> classes=ClassesService.getInstance().buildClasses(CoursesService.getInstance().classIdArray,coursesList,stu,teacher);
         classes.forEach(System.out::println);
         System.out.println();
     }

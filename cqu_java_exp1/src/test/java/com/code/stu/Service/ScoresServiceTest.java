@@ -13,56 +13,52 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ScoresServiceTest {
-    private ScoresController scoresController = new ScoresController();
-    private ViewService viewService = new ViewService();
-    private StudentService studentService=new StudentService();
-    private CoursesService coursesService = new CoursesService();
-    ArrayList<Courses> courses=coursesService.randomGenerateInfo();
-    private ScoresService scoresService = new ScoresService();
-    ArrayList<Student> stu = studentService.randomGenerateInfo(courses);
+    ArrayList<Courses> courses=CoursesService.getInstance().randomGenerateInfo();
+    ArrayList<Student> stu = StudentService.getInstance().randomGenerateInfo(courses);
     @Test
     public void testScoresQueryScoresByClassId(){
-//        stu.forEach(studentService::viewStuAllInfo);
-        String res =  scoresService.queryScoresByClassId("CLASS0",stu,courses);
+//        stu.forEach(Student.getInstance( :viewStuAllInfo);
+        String res =  ScoresService.getInstance().queryScoresByClassId("CLASS0",stu,courses);
         System.out.println(res);
     }
     @Test
     public void testScoresQueryScoresByStudentId(){
-//        ArrayList<Student> stu = studentService.randomGenerateInfo(courses);
-        stu.forEach(studentService::viewStuAllInfo);
+//        ArrayList<Student> stu = Student.getInstance( randomGenerateInfo(courses);
+        stu.forEach(StudentService.getInstance()::viewStuAllInfo);
         Scanner sc = new Scanner(System.in);
         System.out.println("请输入学生学号：");
         String stuId = sc.next();
-        String res =  scoresService.queryScoresByStuId(stuId,stu);
+        String res =  ScoresService.getInstance().queryScoresByStuId(stuId,stu);
         System.out.println(res);
     }
     @Test
     public void testScoresQueryScoresByStudentName(){
-//        ArrayList<Student> stu = studentService.randomGenerateInfo(courses);
-        stu.forEach(studentService::viewStuAllInfo);
+//        ArrayList<Student> stu = Student.getInstance( randomGenerateInfo(courses);
+        stu.forEach(StudentService.getInstance()::viewStuAllInfo);
         Scanner sc = new Scanner(System.in);
         System.out.println("请输入学生姓名：");
         String stuName = sc.next();
-        String res =  scoresService.queryScoresByStuName(stuName,stu);
+        String res =  ScoresService.getInstance().queryScoresByStuName(stuName,stu);
         System.out.println(res);
     }
     @Test
     public void testScoresQueryScoresShowDistributionOfScores(){
-//        ArrayList<Student> stu = studentService.randomGenerateInfo(courses);
-        stu.forEach(studentService::viewStuAllInfo);
-        scoresService.showDistributionOfScores(stu);
+//        ArrayList<Student> stu = Student.getInstance( randomGenerateInfo(courses);
+        stu.forEach(StudentService.getInstance()::viewStuAllInfo);
+        ScoresService.getInstance().showDistributionOfScores(stu);
 
 
     }
     @Test
     public void showScoresOfAllStudents(){
-//        ArrayList<Student> stu = studentService.randomGenerateInfo(courses);
-        //stu.forEach(studentService::viewStuAllInfo);
-        String res =  scoresService.showScoresOfAllStudents(stu);
+//        ArrayList<Student> stu = Student.getInstance( randomGenerateInfo(courses);
+        //stu.forEach(Student.getInstance( :viewStuAllInfo);
+        String res =  ScoresService.getInstance().showScoresOfAllStudents(stu);
         System.out.println(res);
     }
     @Test
     public void testScoresController(){
+        ScoresController scoresController = new ScoresController();
         scoresController.ScoresInfoQuery(stu,courses);
     }
 }

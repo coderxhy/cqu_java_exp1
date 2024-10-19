@@ -1,49 +1,24 @@
 package org.cquer;
 
-
 import com.code.stu.Controller.*;
 import com.code.stu.Service.impl.*;
 import com.code.stu.entity.Classes;
 import com.code.stu.entity.Courses;
 import com.code.stu.entity.Student;
 import com.code.stu.entity.Teacher;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    public static  ArrayList<Student> testStudent(){
-        Student stu=Student.builder().stuId("20221545").stuName("ZiyuLiu").sex("Man").build();
-        Student stu2=Student.builder().stuId("20221537").stuName("HongyuXu").sex("Man").build();
-        ArrayList<Student> arrayStu=new ArrayList<>();
-        arrayStu.add(stu);
-        arrayStu.add(stu2);
-        return arrayStu;
-    }
-    public static void testView(){
-        ViewService viewService = new ViewService();
-        viewService.welcomeInterface();
-    }
-
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
-        CoursesService coursesService = new CoursesService();
-        ArrayList<Courses> courses=coursesService.randomGenerateInfo();
-
-        StudentService studentService = new StudentService();
-        ArrayList<Student> students=studentService.randomGenerateInfo(courses);
-
-        TeacherService teacherService = new TeacherService();
-        ArrayList<Teacher> teachers=teacherService.randomGenerateInfo(courses);
-
-        ClassesService classesService = new ClassesService();
+        ArrayList<Courses> courses=CoursesService.getInstance().randomGenerateInfo();
+        ArrayList<Student> students=StudentService.getInstance().randomGenerateInfo(courses);
+        ArrayList<Teacher> teachers=TeacherService.getInstance().randomGenerateInfo(courses);
 
         boolean inSystem = true;
         while (inSystem) {
-            testView();
+            ViewService.getInstance().welcomeInterface();
             switch (scanner.nextInt()){
                 case 1:
                     //学生信息管理
@@ -65,7 +40,7 @@ public class Main {
                     break;
                 case 5:
                     ClassesController cct=new ClassesController();
-                    ArrayList<Classes> classes = classesService.buildClasses(coursesService.classIdArray, courses, students, teachers);
+                    ArrayList<Classes> classes = ClassesService.getInstance().buildClasses(CoursesService.getInstance().classIdArray, courses, students, teachers);
                     cct.ClassesInfoManagement(classes);
                     break;
                 case 6:

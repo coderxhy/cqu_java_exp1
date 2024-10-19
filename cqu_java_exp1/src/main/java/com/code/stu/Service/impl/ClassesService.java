@@ -11,6 +11,21 @@ import java.util.*;
 import java.util.stream.Collectors;
 @Service
 public class ClassesService implements ClassesInterface {
+    private static  ClassesService INSTANCE;
+
+    private ClassesService() {}
+
+    public static ClassesService getInstance() {
+        if (INSTANCE == null) {
+            synchronized (ClassesService.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new ClassesService();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
     public final String[] beginTerms = {"2022年秋", "2023年春", "2023年秋", "2024年春", "2024年秋"};
 
     @Override

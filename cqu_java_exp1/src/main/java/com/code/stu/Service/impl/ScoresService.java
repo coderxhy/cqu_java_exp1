@@ -16,6 +16,21 @@ import java.util.List;
 public class ScoresService
 //        extends ServiceImpl<ScoresMapper,Scores>
         implements ScoresInterface {
+
+    private static ScoresService INSTANCE;
+    private ScoresService(){}
+
+    public static ScoresService getInstance(){
+        if(INSTANCE == null){
+            synchronized (ScoresService.class){
+                if(INSTANCE == null){
+                    INSTANCE = new ScoresService();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
     @Override
     public Scores RandomGenerateInfo(Courses course){
         Random r = new Random();

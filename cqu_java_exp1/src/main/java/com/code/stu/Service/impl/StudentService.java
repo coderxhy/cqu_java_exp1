@@ -33,8 +33,21 @@ public class StudentService
     private static final String[] GRADE = {"Freshman","Sophomore","Junior","Senior"};
     public static final int EACH_SELECT_NUM=4;
 
-    private CoursesService coursesService=new CoursesService();
-    private ScoresService scoresService=new ScoresService();
+    private static StudentService INSTANCE;
+
+    private StudentService() {}
+
+    public static StudentService getInstance() {
+        if (INSTANCE == null) {
+            synchronized (StudentService.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new StudentService();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
 
     @Override
     public ArrayList<Student> randomGenerateInfo(ArrayList<Courses> coursesList){
@@ -51,11 +64,11 @@ public class StudentService
                 HashMap<String,Scores> scoresMap=new HashMap<>();
                 //防止学生选课时发生重复
                 HashSet<String> selectedCourses=new HashSet<>();
-                Map.Entry<String, String> entry = coursesService.GenerateEntry();
+                Map.Entry<String, String> entry = CoursesService.getInstance().GenerateEntry();
                 for(int k=0;k<EACH_SELECT_NUM;k++){
                     //对每个科目随机生成成绩
                     Courses randomCourse=coursesList.get(r.nextInt(coursesList.size()));
-                    Scores score=scoresService.RandomGenerateInfo(randomCourse);
+                    Scores score=ScoresService.getInstance().RandomGenerateInfo(randomCourse);
                     while(selectedCourses.contains(randomCourse.getCourseName())){
                         randomCourse=coursesList.get(r.nextInt(coursesList.size()));
                     }

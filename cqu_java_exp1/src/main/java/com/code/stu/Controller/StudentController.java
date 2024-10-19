@@ -13,28 +13,23 @@ import java.util.Scanner;
 @Controller
 public class StudentController {
 
-    private StudentService studentService=new StudentService();
-
-    private ViewService viewService=new ViewService();
-
-
     public void StudentInfoManagement(ArrayList<Student> students, ArrayList<Courses> courses){
         Scanner sc=new Scanner(System.in);
         boolean flag=true;
         while(flag){
-            viewService.StudentShowInterface();
+            ViewService.getInstance().StudentShowInterface();
             switch (sc.nextInt()){
                 case 1:
                     System.out.println("请输入你要添加的学生信息：");
-                    Student stu=viewService.StudentInterface();
-                    String appendRes=studentService.appendStuInfo(stu,students);
+                    Student stu=ViewService.getInstance().StudentInterface();
+                    String appendRes=StudentService.getInstance().appendStuInfo(stu,students);
                     System.out.println(appendRes);
-                    studentService.viewStuAllInfo(stu);
+                    StudentService.getInstance().viewStuAllInfo(stu);
                     break;
                 case 2:
                     System.out.println("请输入你要删除的学生信息的学号：");
                     String delelteId=sc.next();
-                    String deleteRes=studentService.deleteStuById(delelteId,students);
+                    String deleteRes=StudentService.getInstance().deleteStuById(delelteId,students);
                     System.out.println(deleteRes);
                     break;
                 case 3:
@@ -43,10 +38,10 @@ public class StudentController {
                     Optional<Student> opt=students.stream().filter((Student s)->s.getStuId().equals(updateId)).findFirst();
                     if(opt.isPresent()){
                         System.out.println("这是你将要更新的学生的基本信息：");
-                        studentService.viewStuBasicInfo(opt.get());
+                        StudentService.getInstance().viewStuBasicInfo(opt.get());
                         System.out.println("请输入你要更新的学生信息：");
-                        Student updateStu=viewService.StudentInterface();
-                        String updateRes = studentService.updateStuInfo(updateStu,opt);
+                        Student updateStu= ViewService.getInstance().StudentInterface();
+                        String updateRes = StudentService.getInstance().updateStuInfo(updateStu,opt);
                         System.out.println(updateRes);
                         break;
                     }else {
@@ -55,11 +50,11 @@ public class StudentController {
                     }
                 case 4:
                     System.out.println("全部学生的基本信息如下：");
-                    students.forEach(studentService::viewStuBasicInfo);
+                    students.forEach(StudentService.getInstance()::viewStuBasicInfo);
                     break;
                 case 5:
                     System.out.println("全部学生的所有信息如下：");
-                    students.forEach(studentService::viewStuAllInfo);
+                    students.forEach(StudentService.getInstance()::viewStuAllInfo);
                     break;
                 case 6:
                     flag=false;

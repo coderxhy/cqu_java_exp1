@@ -18,6 +18,19 @@ public class CoursesService
     public static final int CLASS_NUM=20;
     public static final  int CLASS_ID_LIST_SIZE=CLASS_NUM/COURSE_NUM;
     public static final int ASSIGN_STUDENT_NUM=30;
+    private static CoursesService INSTANCE ;
+
+    private CoursesService(){}
+    public static CoursesService getInstance() {
+        if(INSTANCE==null) {
+            synchronized (CoursesService.class) {
+                if(INSTANCE==null) {
+                    INSTANCE=new CoursesService();
+                }
+            }
+        }
+        return INSTANCE;
+    }
 
     private static String[] DEPARTMENTS = {
             "计算机学院", "软件工程学院", "电气信息学院"
@@ -149,7 +162,7 @@ public class CoursesService
                     if(courseOpt.isPresent()){
                         Courses c = courseOpt.get();
                         System.out.println("学生的基本信息如下：");
-                        students.forEach(new StudentService()::viewStuBasicInfo);
+                        students.forEach(StudentService.getInstance()::viewStuBasicInfo);
                         System.out.println("该课程的教学班号信息如下：");
                         c.getClassId().forEach(System.out::println);
                         boolean assignFlag = true;
@@ -217,7 +230,7 @@ public class CoursesService
                             case 1:
                                 System.out.println("----------------------------------------------------------------");
                                 System.out.println("---------------------------教师信息展示---------------------------");
-                                teachers.forEach(new TeacherService()::viewTeacherAllInfo);
+                                teachers.forEach(TeacherService.getInstance()::viewTeacherAllInfo);
                                 System.out.println("----------------------------------------------------------------");
                                 break;
                             case 2:
@@ -259,7 +272,7 @@ public class CoursesService
                                 case 1:
                                     System.out.println("----------------------------------------------------------------");
                                     System.out.println("---------------------------学生信息展示---------------------------");
-                                    students.forEach(new StudentService()::viewStuAllInfo);
+                                    students.forEach(StudentService.getInstance()::viewStuAllInfo);
                                     System.out.println("----------------------------------------------------------------");
                                     break;
                                 case 2:

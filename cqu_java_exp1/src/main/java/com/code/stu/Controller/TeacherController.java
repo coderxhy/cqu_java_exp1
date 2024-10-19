@@ -11,27 +11,23 @@ import java.util.Scanner;
 
 public class TeacherController {
 
-    private TeacherService  teacherService=new TeacherService();
-
-    private ViewService viewService=new ViewService();
-
     public void  TeacherInfoManagement(ArrayList<Teacher> teachers){
         Scanner sc=new Scanner(System.in);
         boolean flag=true;
         while(flag){
-            viewService.TeacherShowInterface();
+            ViewService.getInstance().TeacherShowInterface();
             switch (sc.nextInt()){
                 case 1:
                     System.out.println("请输入你要添加的教师信息：");
-                    Teacher t=viewService.TeacherInterface();//需要导入ArrayList<String> classIdList的数据进行判断
-                    String appendRes=teacherService.appendTeacherInfo(t,teachers);
+                    Teacher t=ViewService.getInstance().TeacherInterface();//需要导入ArrayList<String> classIdList的数据进行判断
+                    String appendRes=TeacherService.getInstance().appendTeacherInfo(t,teachers);
                     System.out.println(appendRes);
-                    teacherService.viewTeacherAllInfo(t);
+                    TeacherService.getInstance().viewTeacherAllInfo(t);
                     break;
                 case 2:
                     System.out.println("请输入你要删除的教师信息的编号：");
                     String delelteId=sc.next();
-                    String deleteRes=teacherService.deleteTeacherById(delelteId,teachers);
+                    String deleteRes=TeacherService.getInstance().deleteTeacherById(delelteId,teachers);
                     System.out.println(deleteRes);
                     break;
                 case 3:
@@ -40,10 +36,10 @@ public class TeacherController {
                     Optional<Teacher> opt=teachers.stream().filter((Teacher s)->s.getTeacherId().equals(updateId)).findFirst();
                     if(opt.isPresent()){
                         System.out.println("这是你将要更新的教师的信息：");
-                        teacherService.viewTeacherAllInfo(opt.get());
+                        TeacherService.getInstance().viewTeacherAllInfo(opt.get());
                         System.out.println("请输入你要更新的教师的信息：");
-                        Teacher updateT=viewService.TeacherInterface();
-                        String updateRes = teacherService.updateTeacherInfo(updateT,opt);
+                        Teacher updateT=ViewService.getInstance().TeacherInterface();
+                        String updateRes = TeacherService.getInstance().updateTeacherInfo(updateT,opt);
                         System.out.println(updateRes);
                         break;
                     }else {
@@ -52,7 +48,7 @@ public class TeacherController {
                     }
                 case 4:
                     System.out.println("全部教师的信息如下：");
-                    teachers.forEach(teacherService::viewTeacherAllInfo);
+                    teachers.forEach(TeacherService.getInstance()::viewTeacherAllInfo);
                     break;
                 case 5:
                     flag=false;

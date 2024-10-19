@@ -30,6 +30,22 @@ public class ViewService implements ViewInterface {
 
     Random r = new Random();
     Scanner sc=new Scanner(System.in);
+
+    private static ViewService INSTANCE;
+
+    private ViewService(){}
+
+    public static ViewService getInstance(){
+        if(INSTANCE==null){
+            synchronized (ViewService.class){
+                if(INSTANCE==null){
+                    INSTANCE=new ViewService();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
     @Override
     public void welcomeInterface(){
         System.out.println("欢迎使用学生成绩管理系统！！！");
